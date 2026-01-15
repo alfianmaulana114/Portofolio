@@ -3,17 +3,49 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Linkedin } from 'lucide-react'
+import { ArrowRight, Linkedin, Code2, Terminal, Cpu, Database, Globe } from 'lucide-react'
 
 export default function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-white px-4 pt-20">
+      {/* Background Decorative Elements */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Subtle Grid Background */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(#000 1.5px, transparent 1.5px), linear-gradient(90deg, #000 1.5px, transparent 1.5px)`,
+            backgroundSize: '40px 40px'
+          }}
+        ></div>
+
+        {/* Floating IT Elements */}
+        <div className="absolute top-[15%] left-[5%] animate-bounce duration-[3000ms] opacity-20 hidden md:block">
+          <div className="px-3 py-1 border-2 border-black font-black text-[10px] tracking-widest uppercase italic font-mono">{"SELECT * FROM api"}</div>
+        </div>
+        <div className="absolute top-[25%] right-[10%] animate-pulse opacity-20 hidden md:block">
+          <Database className="h-10 w-10" />
+        </div>
+        <div className="absolute bottom-[20%] left-[10%] animate-bounce duration-[4000ms] opacity-20 hidden md:block">
+          <Terminal className="h-8 w-8" />
+        </div>
+        <div className="absolute top-[10%] right-[30%] animate-pulse delay-700 opacity-20 hidden md:block">
+          <div className="px-3 py-1 border-2 border-black font-black text-[10px] tracking-widest uppercase italic font-mono">{"{ status: 200 }"}</div>
+        </div>
+        <div className="absolute bottom-[30%] right-[5%] animate-bounce duration-[2500ms] opacity-20 hidden md:block text-[10px] font-black italic">
+          {"// backend_enthusiast"}
+        </div>
+      </div>
+
       <div className="container mx-auto max-w-[1200px] grid md:grid-cols-2 gap-12 items-center relative z-10">
 
         <div className="flex flex-col gap-6 text-left animate-in slide-in-from-left duration-1000">
+          <div className="flex items-center gap-2 px-3 py-1 bg-yellow-400 border-2 border-black w-fit shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <span className="text-[10px] font-black uppercase tracking-tighter">Status: Open to Work</span>
+          </div>
 
           <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-black leading-[1.1]">
-            HALO, SAYA ALFIAN.
+            HALO, SAYA <span className="italic underline decoration-4 underline-offset-8">ALFIAN.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-gray-800 max-w-lg leading-relaxed font-bold border-l-4 border-black pl-4">
@@ -21,15 +53,9 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
-            <Button asChild className="h-14 px-8 text-lg bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
+            <Button asChild className="h-14 px-8 text-lg bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
               <Link href="https://www.linkedin.com/in/alfianekamaulana" target="_blank">
                 <Linkedin className="mr-2 h-5 w-5" /> LinkedIn
-              </Link>
-            </Button>
-
-            <Button asChild variant="outline" className="h-14 px-8 text-lg bg-white text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
-              <Link href="#experience">
-                Lihat Progress Saya <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
@@ -48,8 +74,12 @@ export default function Hero() {
 
             {/* Image Wrapper without Card */}
             <div className="relative z-10 w-full h-full group cursor-pointer">
+              {/* Decorative Corner Accents */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-black -translate-x-4 -translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-black translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500" />
+
               {/* Darker Black Background/Shadow on Hover */}
-              <div className="absolute inset-x-[-5%] inset-y-[-5%] bg-black/20 rounded-full scale-0 group-hover:scale-100 transition-all duration-500 ease-out -z-10" />
+              <div className="absolute inset-x-[-5%] inset-y-[-5%] bg-black/5 rounded-full scale-0 group-hover:scale-100 transition-all duration-500 ease-out -z-10" />
 
               <Image
                 src="/images/home1.png"
@@ -59,6 +89,14 @@ export default function Hero() {
                 className="object-contain filter grayscale hover:grayscale-0 transition-all duration-500 group-hover:brightness-90 group-hover:scale-105"
                 priority
               />
+
+              {/* Floating Tech Chips around Image */}
+              <div className="absolute -top-4 -right-4 bg-white border-2 border-black px-3 py-1 font-black text-[10px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hidden md:block">
+                BACKEND_DEV
+              </div>
+              <div className="absolute -bottom-4 -left-4 bg-white border-2 border-black px-3 py-1 font-black text-[10px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hidden md:block">
+                CLOUD_READY
+              </div>
             </div>
           </div>
         </div>

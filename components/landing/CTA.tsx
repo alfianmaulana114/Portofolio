@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 
 export default function CTA() {
   return (
-    <section id="contact" className="py-32 bg-white">
+    <section id="contact" className="py-16 bg-transparent">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto border-2 border-black p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-gray-50">
           <h2 className="text-5xl font-black mb-6 tracking-tight text-black">SIAP KOLABORASI?</h2>

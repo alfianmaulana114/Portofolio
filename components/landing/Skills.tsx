@@ -11,14 +11,17 @@ export default function Skills({ data }: { data: Skill[] | null }) {
   }, {} as Record<string, Skill[]>)
 
   return (
-    <section id="skills" className="py-24 bg-white">
+    <section id="skills" className="py-6 bg-transparent">
       <div className="container mx-auto max-w-[1000px] px-4 md:px-8">
         <h2 className="text-4xl font-black mb-16 text-center tracking-tight">KEMAMPUAN TEKNIS</h2>
 
         <div className="grid md:grid-cols-2 gap-12">
           {Object.entries(skillsByCategory).map(([category, skills]) => (
             <div key={category}>
-              <h3 className="text-xl font-bold mb-6 border-b-2 border-black pb-2 inline-block">{category}</h3>
+              <div className="flex items-center gap-2 mb-6">
+                <h3 className="text-xl font-bold border-b-2 border-black pb-2 inline-block">{category}</h3>
+                <span className="text-[10px] font-mono text-gray-400 opacity-50">{"// log_category"}</span>
+              </div>
               <div className="flex flex-wrap gap-3">
                 {skills.map((skill) => (
                   <div
