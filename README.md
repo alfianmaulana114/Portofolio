@@ -1,40 +1,67 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alfian's Web Portfolio 🚀
 
-## Getting Started
+Selamat datang di repository portofolio pribadi saya. Proyek ini dibangun dengan fokus pada estetika **Retro Aesthetic / Neo-brutalism** yang modern, bersih, dan berani.
 
-First, run the development server:
+## 🎨 Design Aesthetic
+Website ini mengusung tema **Retro-Modern** dengan ciri khas:
+- **Hard Shadows**: Bayangan tajam dan tegas pada elemen kartu dan tombol.
+- **Bold Borders**: Penggunaan garis tepi hitam tebal.
+- **Dynamic Interactions**: Efek hover yang hidup, transformasi grayscale ke warna, dan animasi polkadot.
+- **Micro-interactions**: Efek miring (*skew*) dan perbesaran (*scale*) saat interaksi pengguna.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tech Stack
+- **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
+- **UI & Styling**: [Tailwind CSS 4](https://tailwindcss.com/) & [Lucide React](https://lucide.dev/)
+- **Backend & Database**: [Supabase](https://supabase.com/) (PostgreSQL & Auth)
+- **State Management**: React Hooks (useState, useEffect)
+- **Icons**: Lucide React
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Fitur Utama
+- **Landing Page Interaktif**:
+    - **Hero Section**: Animasi foto grayscale-to-color dengan latar polkadot.
+    - **Tentang Saya**: Penjelasan fokus bidang teknologi.
+    - **Pengalaman Kerja**: Timeline interaktif dengan gaya retro.
+    - **Sertifikasi**: Grid sertifikat dengan link kredensial.
+    - **Keahlian**: Chip keahlian yang dikelompokkan berdasarkan kategori.
+- **Dashboard Admin**: (Dalam pengembangan/terproteksi) Untuk mengelola data pengalaman, sertifikat, dan keahlian secara dinamis melalui integrasi Supabase.
+- **Responsive Design**: Tampilan optimal di berbagai perangkat (Mobile, Tablet, Desktop).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Instalasi & Pengembangan
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  **Clone repository**:
+    ```bash
+    git clone [url-repository-anda]
+    cd portofolio_alfian
+    ```
 
-## Learn More
+2.  **Instal dependensi**:
+    ```bash
+    npm install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3.  **Setup Environment Variables**:
+    Buat file `.env.local` dan tambahkan kredensial Supabase Anda:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4.  **Jalankan server pengembangan**:
+    ```bash
+    npm run dev
+    ```
+    Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Struktur Proyek
+- `/app`: Folder utama untuk routing Next.js (App Router).
+- `/components`: Komponen UI yang dapat digunakan kembali.
+    - `/landing`: Komponen khusus untuk halaman utama.
+    - `/shared`: Komponen umum seperti Navbar dan Footer.
+- `/lib`: Utilitas, konfigurasi Supabase, dan definisi tipe data (TypeScript).
+- `/public`: Aset statis seperti gambar dan ikon.
 
-## Deploy on Vercel
+## 📝 Lisensi
+Proyek ini dibuat untuk keperluan portofolio pribadi.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# Portofolio
->>>>>>> 28e7b80ec3beffd3358f693c13f0739ccb44ee86
+---
+Membangun dengan ❤️ oleh **Alfian Maulana**
