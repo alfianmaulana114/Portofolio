@@ -3,6 +3,38 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import sharp from 'sharp'
+import { z } from 'zod'
+
+// --- Security Schemas ---
+const ExperienceSchema = z.object({
+    title: z.string().min(1).max(200),
+    company: z.string().min(1).max(200),
+    description: z.string().max(2000),
+    category: z.enum(['Magang', 'Organisasi', 'Kerja']),
+    start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    end_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().nullable(),
+    is_current: z.boolean().default(false),
+})
+
+const CertificateSchema = z.object({
+    title: z.string().min(1).max(200),
+    issuer: z.string().min(1).max(200),
+    issued_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    credential_url: z.string().url().optional().nullable().or(z.literal('')),
+})
+
+const ProjectSchema = z.object({
+    title: z.string().min(1).max(200),
+    description: z.string().max(2000),
+    role: z.string().max(200),
+    project_url: z.string().url().optional().nullable().or(z.literal('')),
+})
+
+const SkillSchema = z.object({
+    name: z.string().min(1).max(100),
+    category: z.string().min(1).max(100),
+    proficiency_level: z.string(),
+})
 
 // Helper function to upload and compress images to WebP
 async function uploadImage(file: File, bucket: string) {
@@ -54,18 +86,25 @@ async function uploadImage(file: File, bucket: string) {
 export async function createExperience(formData: FormData) {
     const supabase = await createClient()
 
-    const title = formData.get('title') as string
-    const company = formData.get('company') as string
-    const description = formData.get('description') as string
-    const category = formData.get('category') as string
-    const start_date = formData.get('start_date') as string
-    const end_date = formData.get('end_date') as string
-    const is_current = formData.get('is_current') === 'on'
-    const imageFile = formData.get('image') as File
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
+    // Validate using Zod
+    const validation = ExperienceSchema.safeParse({
+        title: formData.get('title'),
+        company: formData.get('company'),
+        description: formData.get('description'),
+        category: formData.get('category'),
+        start_date: formData.get('start_date'),
+        end_date: formData.get('end_date') || null,
+        is_current: formData.get('is_current') === 'on',
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
+    }
+
+    const imageFile = formData.get('image') as File
     let image_url = null
     if (imageFile && imageFile.size > 0) {
         image_url = await uploadImage(imageFile, 'portfolio-images')
@@ -73,14 +112,8 @@ export async function createExperience(formData: FormData) {
 
     const { error } = await supabase.from('experiences').insert({
         user_id: user.id,
-        title,
-        company,
-        description,
-        category,
+        ...validation.data,
         image_url,
-        start_date,
-        end_date: end_date || null,
-        is_current,
     })
 
     if (error) return { error: error.message }
@@ -93,28 +126,29 @@ export async function createExperience(formData: FormData) {
 export async function updateExperience(id: string, formData: FormData) {
     const supabase = await createClient()
 
-    const title = formData.get('title') as string
-    const company = formData.get('company') as string
-    const description = formData.get('description') as string
-    const category = formData.get('category') as string
-    const start_date = formData.get('start_date') as string
-    const end_date = formData.get('end_date') as string
-    const is_current = formData.get('is_current') === 'on'
-    const imageFile = formData.get('image') as File
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
-    const updateData: any = {
-        title,
-        company,
-        description,
-        category,
-        start_date,
-        end_date: end_date || null,
-        is_current,
+    // Validate using Zod
+    const validation = ExperienceSchema.safeParse({
+        title: formData.get('title'),
+        company: formData.get('company'),
+        description: formData.get('description'),
+        category: formData.get('category'),
+        start_date: formData.get('start_date'),
+        end_date: formData.get('end_date') || null,
+        is_current: formData.get('is_current') === 'on',
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
     }
 
+    const updateData: any = {
+        ...validation.data
+    }
+
+    const imageFile = formData.get('image') as File
     if (imageFile && imageFile.size > 0) {
         const image_url = await uploadImage(imageFile, 'portfolio-images')
         if (image_url) updateData.image_url = image_url
@@ -135,7 +169,15 @@ export async function updateExperience(id: string, formData: FormData) {
 
 export async function deleteExperience(id: string) {
     const supabase = await createClient()
-    const { error } = await supabase.from('experiences').delete().eq('id', id)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Unauthorized' }
+
+    const { error } = await supabase
+        .from('experiences')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id)
+
     if (error) return { error: error.message }
     revalidatePath('/dashboard/experiences')
     revalidatePath('/')
@@ -147,15 +189,22 @@ export async function deleteExperience(id: string) {
 export async function createCertificate(formData: FormData) {
     const supabase = await createClient()
 
-    const title = formData.get('title') as string
-    const issuer = formData.get('issuer') as string
-    const issued_date = formData.get('issued_date') as string
-    const credential_url = formData.get('credential_url') as string
-    const imageFile = formData.get('image') as File
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
+    // Validate using Zod
+    const validation = CertificateSchema.safeParse({
+        title: formData.get('title'),
+        issuer: formData.get('issuer'),
+        issued_date: formData.get('issued_date'),
+        credential_url: formData.get('credential_url') || null,
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
+    }
+
+    const imageFile = formData.get('image') as File
     let image_url = null
     if (imageFile && imageFile.size > 0) {
         image_url = await uploadImage(imageFile, 'portfolio-images')
@@ -163,10 +212,7 @@ export async function createCertificate(formData: FormData) {
 
     const { error } = await supabase.from('certificates').insert({
         user_id: user.id,
-        title,
-        issuer,
-        issued_date,
-        credential_url: credential_url || null,
+        ...validation.data,
         image_url,
     })
 
@@ -180,22 +226,26 @@ export async function createCertificate(formData: FormData) {
 export async function updateCertificate(id: string, formData: FormData) {
     const supabase = await createClient()
 
-    const title = formData.get('title') as string
-    const issuer = formData.get('issuer') as string
-    const issued_date = formData.get('issued_date') as string
-    const credential_url = formData.get('credential_url') as string
-    const imageFile = formData.get('image') as File
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
-    const updateData: any = {
-        title,
-        issuer,
-        issued_date,
-        credential_url: credential_url || null,
+    // Validate using Zod
+    const validation = CertificateSchema.safeParse({
+        title: formData.get('title'),
+        issuer: formData.get('issuer'),
+        issued_date: formData.get('issued_date'),
+        credential_url: formData.get('credential_url') || null,
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
     }
 
+    const updateData: any = {
+        ...validation.data
+    }
+
+    const imageFile = formData.get('image') as File
     if (imageFile && imageFile.size > 0) {
         const image_url = await uploadImage(imageFile, 'portfolio-images')
         if (image_url) updateData.image_url = image_url
@@ -216,7 +266,15 @@ export async function updateCertificate(id: string, formData: FormData) {
 
 export async function deleteCertificate(id: string) {
     const supabase = await createClient()
-    const { error } = await supabase.from('certificates').delete().eq('id', id)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Unauthorized' }
+
+    const { error } = await supabase
+        .from('certificates')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id)
+
     if (error) return { error: error.message }
     revalidatePath('/dashboard/certificates')
     revalidatePath('/')
@@ -228,15 +286,22 @@ export async function deleteCertificate(id: string) {
 export async function createProject(formData: FormData) {
     const supabase = await createClient()
 
-    const title = formData.get('title') as string
-    const description = formData.get('description') as string
-    const role = formData.get('role') as string
-    const project_url = formData.get('project_url') as string
-    const imageFile = formData.get('image') as File
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
+    // Validate using Zod
+    const validation = ProjectSchema.safeParse({
+        title: formData.get('title'),
+        description: formData.get('description'),
+        role: formData.get('role'),
+        project_url: formData.get('project_url') || null,
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
+    }
+
+    const imageFile = formData.get('image') as File
     let image_url = null
     if (imageFile && imageFile.size > 0) {
         image_url = await uploadImage(imageFile, 'portfolio-images')
@@ -244,10 +309,7 @@ export async function createProject(formData: FormData) {
 
     const { error } = await supabase.from('projects').insert({
         user_id: user.id,
-        title,
-        description,
-        role,
-        project_url: project_url || null,
+        ...validation.data,
         image_url,
     })
 
@@ -261,22 +323,26 @@ export async function createProject(formData: FormData) {
 export async function updateProject(id: string, formData: FormData) {
     const supabase = await createClient()
 
-    const title = formData.get('title') as string
-    const description = formData.get('description') as string
-    const role = formData.get('role') as string
-    const project_url = formData.get('project_url') as string
-    const imageFile = formData.get('image') as File
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
-    const updateData: any = {
-        title,
-        description,
-        role,
-        project_url: project_url || null,
+    // Validate using Zod
+    const validation = ProjectSchema.safeParse({
+        title: formData.get('title'),
+        description: formData.get('description'),
+        role: formData.get('role'),
+        project_url: formData.get('project_url') || null,
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
     }
 
+    const updateData: any = {
+        ...validation.data
+    }
+
+    const imageFile = formData.get('image') as File
     if (imageFile && imageFile.size > 0) {
         const image_url = await uploadImage(imageFile, 'portfolio-images')
         if (image_url) updateData.image_url = image_url
@@ -297,7 +363,15 @@ export async function updateProject(id: string, formData: FormData) {
 
 export async function deleteProject(id: string) {
     const supabase = await createClient()
-    const { error } = await supabase.from('projects').delete().eq('id', id)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Unauthorized' }
+
+    const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id)
+
     if (error) return { error: error.message }
     revalidatePath('/dashboard/projects')
     revalidatePath('/')
@@ -308,18 +382,24 @@ export async function deleteProject(id: string) {
 
 export async function createSkill(formData: FormData) {
     const supabase = await createClient()
-    const name = formData.get('name') as string
-    const category = formData.get('category') as string
-    const proficiency_level = formData.get('proficiency_level') as string
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
+    // Validate using Zod
+    const validation = SkillSchema.safeParse({
+        name: formData.get('name'),
+        category: formData.get('category'),
+        proficiency_level: formData.get('proficiency_level'),
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
+    }
+
     const { error } = await supabase.from('skills').insert({
         user_id: user.id,
-        name,
-        category,
-        proficiency_level,
+        ...validation.data,
     })
 
     if (error) return { error: error.message }
@@ -331,16 +411,24 @@ export async function createSkill(formData: FormData) {
 
 export async function updateSkill(id: string, formData: FormData) {
     const supabase = await createClient()
-    const name = formData.get('name') as string
-    const category = formData.get('category') as string
-    const proficiency_level = formData.get('proficiency_level') as string
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
+    // Validate using Zod
+    const validation = SkillSchema.safeParse({
+        name: formData.get('name'),
+        category: formData.get('category'),
+        proficiency_level: formData.get('proficiency_level'),
+    })
+
+    if (!validation.success) {
+        return { error: 'Invalid input data: ' + validation.error.message }
+    }
+
     const { error } = await supabase
         .from('skills')
-        .update({ name, category, proficiency_level })
+        .update(validation.data)
         .eq('id', id)
         .eq('user_id', user.id)
 
@@ -353,7 +441,15 @@ export async function updateSkill(id: string, formData: FormData) {
 
 export async function deleteSkill(id: string) {
     const supabase = await createClient()
-    const { error } = await supabase.from('skills').delete().eq('id', id)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Unauthorized' }
+
+    const { error } = await supabase
+        .from('skills')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id)
+
     if (error) return { error: error.message }
     revalidatePath('/dashboard/skills')
     revalidatePath('/')

@@ -14,7 +14,6 @@ export default function ParticlesBackground() {
 
         let animationFrameId: number
         let particles: Particle[] = []
-        // References from your tech stack
         const techLabels = [
             '0', '1', 'PHP', 'SQL', 'NODE', 'API', 'GCP', 'ROOT', 'FETCH',
             'SELECT', 'POST', 'HTTP/2', 'LARAVEL', 'REACT', 'DB', 'GIT',
@@ -49,7 +48,7 @@ export default function ParticlesBackground() {
                 this.opacity = Math.random() * 0.2 + 0.05
                 this.type = Math.random() > 0.85 ? 'text' : 'dot'
                 this.label = techLabels[Math.floor(Math.random() * techLabels.length)]
-                this.isSpecial = Math.random() > 0.95 // Occasionally a bolder one
+                this.isSpecial = Math.random() > 0.95
             }
 
             update() {
@@ -95,7 +94,7 @@ export default function ParticlesBackground() {
                 particle.draw()
             })
 
-            // Draw technical connection lines
+            // Draw connections
             particles.forEach((a, index) => {
                 if (a.type !== 'dot') return
 

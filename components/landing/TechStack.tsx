@@ -1,5 +1,4 @@
 import {
-    Layers,
     Code2,
     Cloud,
     Globe,
@@ -10,13 +9,8 @@ import {
     Cpu,
     Smartphone,
     Box,
-    Server,
-    Search,
-    Network,
-    Zap,
     Activity,
-    Lock,
-    Command
+    Zap
 } from 'lucide-react'
 
 const techStack = [
@@ -40,81 +34,37 @@ const techStack = [
 export default function TechStack() {
     return (
         <section id="techstack" className="py-8 bg-transparent relative overflow-hidden">
-            {/* Background Decorative Elements removed for tighter layout */}
-
-            <div className="container mx-auto px-4 md:px-8 max-w-[1100px] relative z-10">
-                <div className="flex flex-col items-center mb-20 text-center">
-                    <div className="flex items-center gap-3 mb-4">
-                        <Activity size={18} className="text-yellow-500 animate-pulse" />
-                        <span className="text-[12px] font-black tracking-[0.5em] text-black">SYSTEM_MODULES_01</span>
-                        <div className="h-[1px] w-20 bg-black/10"></div>
+            <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
+                <div className="flex flex-col items-center mb-12 text-center">
+                    <div className="flex items-center gap-2 mb-3">
+                        <Activity size={16} className="text-yellow-500 animate-pulse" />
+                        <span className="text-[10px] md:text-[12px] font-black tracking-[0.5em]">SYSTEM_MODULES_01</span>
                     </div>
-                    <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tighter uppercase italic">TECH STACK</h2>
-                    <p className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-widest leading-loose max-w-md">
-                        {"// core_backend_infrastructure_v2.0"} <br />
-                        {"// all_systems_operational"}
-                    </p>
-                    <div className="mt-8 h-2 w-24 bg-black"></div>
+                    <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic">TECH STACK</h2>
+                    <div className="h-1.5 w-16 bg-black"></div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-4">
                     {techStack.map((tech) => (
                         <div key={tech.name} className="group relative">
-                            {/* Outer Glow Effect on Hover */}
-                            <div className={`absolute -inset-0.5 opacity-0 group-hover:opacity-20 transition duration-500 blur-xl ${tech.name === 'Laravel' ? 'bg-red-500' : 'bg-black'}`}></div>
-
-                            <div className="relative bg-white border-2 border-black p-8 flex flex-col items-center justify-center gap-6 transition-all duration-300 group-hover:-translate-x-3 group-hover:-translate-y-3 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] group-hover:shadow-none hover:bg-white overflow-hidden">
-
-                                {/* Technical scanline effect on hover */}
-                                <div className="absolute inset-x-0 h-[2px] bg-black opacity-[0.05] top-0 group-hover:top-full transition-all duration-[1500ms] linear repeat-infinite"></div>
-
-                                <div className="absolute top-2 left-2 flex gap-1">
-                                    <div className="w-1 h-1 bg-black/10"></div>
-                                    <div className="w-4 h-[1px] bg-black/5 mt-[2px]"></div>
-                                </div>
+                            <div className="relative bg-white border border-black p-2 md:p-4 flex flex-col items-center justify-center gap-1 md:gap-3 transition-all duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:shadow-none overflow-hidden">
 
                                 <div className={`transition-all duration-500 transform group-hover:scale-110 ${tech.color}`}>
-                                    <tech.icon className="h-12 w-12 stroke-[1.25px]" />
+                                    <tech.icon className="h-6 w-6 md:h-10 md:w-10 stroke-[1.5px]" />
                                 </div>
 
-                                <div className="flex flex-col items-center text-center gap-1">
-                                    <span className="text-[8px] font-mono text-gray-300 uppercase tracking-tighter mb-1">
-                                        {`REQ_${tech.category}`}
-                                    </span>
-                                    <span className="text-sm font-black uppercase tracking-tight group-hover:italic transition-all">
+                                <div className="flex flex-col items-center text-center">
+                                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-tighter truncate w-full">
                                         {tech.name}
                                     </span>
-                                    <div className="w-0 group-hover:w-full h-[3px] bg-black transition-all duration-300 mt-1"></div>
                                 </div>
 
-                                {/* Floating Code Comment - Always present but animated */}
-                                <div className="absolute -bottom-10 group-hover:bottom-2 transition-all duration-500">
-                                    <span className="text-[7px] font-mono font-bold text-gray-400">
-                                        {`/* ${tech.comment} */`}
-                                    </span>
-                                </div>
-
-                                {/* Status Icon */}
-                                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                    <Zap size={10} className="text-yellow-400 fill-yellow-400" />
+                                <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block">
+                                    <Zap size={8} className="text-yellow-400 fill-yellow-400" />
                                 </div>
                             </div>
                         </div>
                     ))}
-
-                </div>
-
-                {/* Visual Bottom Bar */}
-                <div className="mt-20 flex flex-wrap items-center justify-center gap-8 opacity-20 select-none">
-                    <div className="flex items-center gap-2">
-                        <Database size={14} /> <span className="text-[10px] font-mono">DB_CLUSTER: OK</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Server size={14} /> <span className="text-[10px] font-mono">SRV_SYNC: 99.9%</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Network size={14} /> <span className="text-[10px] font-mono">NET_BANDWIDTH: OPTIMAL</span>
-                    </div>
                 </div>
             </div>
         </section>

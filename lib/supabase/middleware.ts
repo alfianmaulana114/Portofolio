@@ -17,9 +17,7 @@ export async function updateSession(request: NextRequest) {
                     return request.cookies.getAll()
                 },
                 setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value, options }) => {
-                        request.cookies.set(name, value)
-                    })
+                    cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
                     response = NextResponse.next({
                         request: {
                             headers: request.headers,
@@ -33,16 +31,20 @@ export async function updateSession(request: NextRequest) {
         }
     )
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser()
+    // IMPORTANT: Avoid calling getUser() on static assets or certain paths to prevent performance hits
+    // However, our matcher already handles this.
 
-    if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
-        return NextResponse.redirect(new URL('/login', request.url))
+    // Check auth status
+    const { data: { user } } = await supabase.auth.getUser()
+
+    const isDashboardPath = request.nextUrl.pathname.startsWith('/dashboard')
+    const isLoginPath = request.nextUrl.pathname === '/loginalfian'
+
+    if (isDashboardPath && !user) {
+        return NextResponse.redirect(new URL('/loginalfian', request.url))
     }
 
-    // If user is logged in, redirect away from login page to dashboard
-    if (request.nextUrl.pathname === '/login' && user) {
+    if (isLoginPath && user) {
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
