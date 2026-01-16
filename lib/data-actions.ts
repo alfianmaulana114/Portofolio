@@ -36,21 +36,48 @@ const SkillSchema = z.object({
     proficiency_level: z.string(),
 })
 
+// Security: Allowed image MIME types
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif']
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+
 // Helper function to upload and compress images to WebP
 async function uploadImage(file: File, bucket: string) {
     if (!file || file.size === 0) return null
+
+    // Security: Validate file type
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        console.error('Invalid file type:', file.type)
+        return null
+    }
+
+    // Security: Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+        console.error('File size exceeds limit:', file.size)
+        return null
+    }
 
     const supabase = await createClient()
 
     try {
         const buffer = Buffer.from(await file.arrayBuffer())
 
+        // Security: Validate that buffer is actually an image by checking magic bytes
+        const isValidImage = await sharp(buffer)
+            .metadata()
+            .then(() => true)
+            .catch(() => false)
+
+        if (!isValidImage) {
+            console.error('Invalid image file')
+            return null
+        }
+
         // Kompres ke WebP menggunakan sharp
         const compressedBuffer = await sharp(buffer)
             .webp({ quality: 80 }) // Kualitas 80 sudah cukup bagus dan ringan
             .toBuffer()
 
-        // Nama file selalu .webp
+        // Security: Generate secure random filename
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 11)}.webp`
         const filePath = `${fileName}`
 

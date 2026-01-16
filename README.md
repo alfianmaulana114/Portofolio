@@ -74,7 +74,15 @@ Website ini mengusung tema **Retro-Modern** dengan ciri khas:
     ```env
     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+    GITHUB_TOKEN=your_github_token_here (optional, untuk rate limit yang lebih tinggi)
+    ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com (optional, untuk production)
     ```
+    
+    **Catatan Keamanan**:
+    - Jangan commit file `.env.local` ke repository
+    - Gunakan environment variables di Vercel untuk production
+    - `GITHUB_TOKEN` opsional, digunakan untuk meningkatkan rate limit API GitHub
+    - `ALLOWED_HOSTS` opsional, digunakan untuk validasi host header di production
 
 4.  **Jalankan server pengembangan**:
     ```bash

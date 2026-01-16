@@ -33,10 +33,14 @@ export async function getGithubContributions(username: string, year: number) {
           }
         `
 
+        // Security: Validate year range
+        const currentYear = new Date().getFullYear()
+        const validYear = Math.max(2000, Math.min(year, currentYear + 1))
+
         const variables = {
             userName: username,
-            from: `${year}-01-01T00:00:00Z`,
-            to: `${year}-12-31T23:59:59Z`
+            from: `${validYear}-01-01T00:00:00Z`,
+            to: `${validYear}-12-31T23:59:59Z`
         }
 
         const headers: HeadersInit = {

@@ -22,8 +22,17 @@ export async function GET(request: NextRequest) {
         }, 
       } 
     ) 
-    await supabase.auth.exchangeCodeForSession(code) 
-  } 
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    
+    // Security: Handle errors properly
+    if (error) {
+      console.error('Auth callback error:', error)
+      return NextResponse.redirect(new URL('/auth/auth-code-error', request.url))
+    }
+  } else {
+    // Security: No code provided, redirect to error page
+    return NextResponse.redirect(new URL('/auth/auth-code-error', request.url))
+  }
 
   return NextResponse.redirect(new URL('/dashboard', request.url)) 
 } 
