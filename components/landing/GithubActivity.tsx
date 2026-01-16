@@ -85,7 +85,7 @@ export default function GithubActivity() {
                         <Activity size={14} className="text-gray-400" />
                         <span className="text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">ACTIVITY_FEED</span>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase italic text-black">AKTIVITAS GITHUB</h2>
+                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase italic text-black">GITHUB ACTIVITY</h2>
                     <div className="h-1.5 w-16 bg-black"></div>
                 </div>
 

@@ -56,7 +56,7 @@ export default async function Home() {
 
         {/* Render professional experiences */}
         {profesionalExp.length > 0 && (
-          <Experience data={profesionalExp} title="PENGALAMAN PROFESIONAL" />
+          <Experience data={profesionalExp} title="PENGALAMAN KERJA" />
         )}
 
         {/* Render organization experiences */}

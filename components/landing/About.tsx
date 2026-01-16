@@ -26,9 +26,7 @@ export default function About() {
                             Merupakan individu yang proaktif dengan kemampuan interpersonal yang baik, dan aktif terlibat dalam organisasi
                             kemahasiswaan UKM Jurnalistik Universitas Bina Sarana Informatika. Memiliki pengalaman magang dibagian
                             arsip dan dokumentasi di Museum Nasional Indonesia. Memiliki keterampilan dan minat belajar terutama
-                            dalam bidang <span className="underline decoration-4 decoration-yellow-400 underline-offset-4 font-black">project management</span>,
-                            <span className="underline decoration-4 decoration-black underline-offset-4 font-black">cloud computing</span>,
-                            <span className="underline decoration-4 decoration-black underline-offset-4 font-black">web development</span> dan sangat terbuka
+                            dalam bidang project management, cloud computing, software development dan sangat terbuka
                             untuk mengeksplorasi kesempatan lainnya.
                         </p>
                     </div>

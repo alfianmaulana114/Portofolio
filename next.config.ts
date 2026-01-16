@@ -1,14 +1,27 @@
 import type { NextConfig } from "next";
 
+// Helper to get Supabase hostname from env
+function getSupabaseHostname(): string {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url) {
+    // Fallback to default Supabase hostname if env var not set (for build time)
+    return 'eidjizjlczazdwlfkxbq.supabase.co';
+  }
+  try {
+    return new URL(url).hostname;
+  } catch {
+    // Fallback if URL parsing fails
+    return 'eidjizjlczazdwlfkxbq.supabase.co';
+  }
+}
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        // Security: Use environment variable or allow all Supabase storage domains
-        hostname: process.env.NEXT_PUBLIC_SUPABASE_URL 
-          ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname 
-          : '*.supabase.co',
+        // Security: Use environment variable for Supabase storage domain
+        hostname: getSupabaseHostname(),
         port: '',
         pathname: '/storage/v1/object/public/**',
       },

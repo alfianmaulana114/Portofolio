@@ -39,11 +39,11 @@ export default function Hero() {
                     </div>
 
                     <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-black leading-[1.1] uppercase">
-                        HALO, SAYA <br className="md:hidden" /> <span className="italic underline decoration-4 underline-offset-8">ALFIAN.</span>
+                        HALO, SAYA <br className="md:hidden" /> <span className=" decoration-4 ">ALFIAN.</span>
                     </h1>
 
                     <p className="text-sm md:text-xl text-gray-800 max-w-lg leading-relaxed font-bold border-black md:border-l-4 border-l-0 md:pl-4 px-2 md:px-4">
-                        Saya adalah seorang pembelajar yang antusias di dunia teknologi. Memiliki dedikasi penuh untuk mendalami Project Management, Cloud Computing, dan Web Development.
+                        Saya adalah seorang pembelajar yang antusias di dunia teknologi. Memiliki dedikasi penuh untuk mendalami Project Management, Cloud Computing, dan Software Development.
                     </p>
 
                     <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2 md:pt-4 w-full">
