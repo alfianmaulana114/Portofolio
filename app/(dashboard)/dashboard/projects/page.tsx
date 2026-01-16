@@ -56,7 +56,7 @@ export default async function ProjectsPage() {
 
                                             <div className="flex gap-2">
                                                 <EditProjectDialog project={project} />
-                                                <form action={deleteProject.bind(null, project.id)}>
+                                                <form action={async () => { await deleteProject(project.id) }}>
                                                     <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-600 hover:bg-red-50 border-2 border-transparent hover:border-red-500 rounded-none transition-all">
                                                         <Trash2 className="h-5 w-5" />
                                                     </Button>

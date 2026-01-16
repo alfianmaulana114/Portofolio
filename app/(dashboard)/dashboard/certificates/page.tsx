@@ -56,7 +56,10 @@ export default async function CertificatesPage() {
                                         </div>
                                         <div className="flex gap-1 ml-4 shrink-0">
                                             <EditCertificateDialog certificate={cert} />
-                                            <form action={deleteCertificate.bind(null, cert.id)}>
+                                            <form action={async () => {
+                                                'use server'
+                                                await deleteCertificate(cert.id)
+                                            }}>
                                                 <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-600 hover:bg-red-50 border-2 border-transparent hover:border-red-500 rounded-none transition-all">
                                                     <Trash2 className="h-5 w-5" />
                                                 </Button>

@@ -76,6 +76,7 @@ export default function Hero() {
                                 src="/images/home1.png"
                                 alt="Alfian"
                                 fill
+                                quality={100}
                                 unoptimized
                                 className="object-contain filter grayscale hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
                                 priority

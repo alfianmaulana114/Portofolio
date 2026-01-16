@@ -55,7 +55,7 @@ export default async function SkillsPage() {
                                 Apa senjata andalan Anda berikutnya?
                             </DialogDescription>
                         </DialogHeader>
-                        <form action={createSkill} className="grid gap-6 py-4">
+                        <form action={async (formData) => { await createSkill(formData) }} className="grid gap-6 py-4">
                             <div className="grid gap-2">
                                 <Label htmlFor="name" className="font-bold uppercase text-xs">Nama Skill</Label>
                                 <Input id="name" name="name" placeholder="Contoh: React, Python, UI Design" required className="border-2 border-black rounded-none" />
@@ -111,7 +111,7 @@ export default async function SkillsPage() {
                                                 <Zap className="h-5 w-5 fill-yellow-400" />
                                                 <div className="flex gap-1">
                                                     <EditSkillDialog skill={skill} />
-                                                    <form action={deleteSkill.bind(null, skill.id)}>
+                                                    <form action={async () => { await deleteSkill(skill.id) }}>
                                                         <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-none border-2 border-transparent hover:border-red-500 transition-all">
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
