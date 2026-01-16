@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { createSkill, deleteSkill } from '@/lib/data-actions'
 import { Trash2, Plus, Zap, Code, ShieldCheck } from 'lucide-react'
 import { EditSkillDialog } from '@/components/dashboard/EditSkillDialog'
+import { Skill } from '@/lib/types'
 import {
     Dialog,
     DialogContent,
@@ -30,7 +31,7 @@ export default async function SkillsPage() {
         }
         acc[skill.category].push(skill)
         return acc
-    }, {} as Record<string, any[]>)
+    }, {} as Record<string, Skill[]>)
 
     return (
         <div className="max-w-5xl mx-auto space-y-10 py-6">
@@ -96,14 +97,16 @@ export default async function SkillsPage() {
             </div>
 
             <div className="grid gap-10">
-                {skillsByCategory && Object.entries(skillsByCategory).map(([category, categorySkills]) => (
+                {skillsByCategory && Object.entries(skillsByCategory).map(([category, categorySkills]) => {
+                    const skills = categorySkills as Skill[]
+                    return (
                     <div key={category} className="space-y-6">
                         <div className="flex items-center gap-4">
                             <h3 className="text-2xl font-black uppercase tracking-widest bg-black text-white px-4 py-1">{category}</h3>
                             <div className="flex-1 h-1 bg-black"></div>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                            {categorySkills.map((skill) => (
+                            {skills.map((skill) => (
                                 <div key={skill.id} className="relative group">
                                     <Card className="bg-white border-2 border-black rounded-none h-full transition-all duration-300 group-hover:translate-x-[4px] group-hover:translate-y-[4px] group-hover:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                                         <CardContent className="p-6">
@@ -126,7 +129,8 @@ export default async function SkillsPage() {
                             ))}
                         </div>
                     </div>
-                ))}
+                    )
+                })}
             </div>
 
             {skills?.length === 0 && (

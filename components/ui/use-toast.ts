@@ -1,15 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { useToast as useToastOriginal, toast as toastOriginal } from "sonner"
-
-// Since shadcn/ui might have removed the old toast, we'll create a simple hook
-// that mimics the API expected by the login page, or use sonner if available.
-// For now, let's create a simple context-based toast or just use console.log if dependencies fail.
-// But actually, let's try to install sonner first as it is the recommended replacement.
-
-// Wait, the user asked for `use-toast`. I'll implement a basic version of it to satisfy the requirement
-// without fighting the registry errors.
 
 type ToastProps = {
   title?: string
@@ -18,24 +9,18 @@ type ToastProps = {
 }
 
 export function useToast() {
-  const toast = ({ title, description, variant }: ToastProps) => {
-    // In a real app with sonner, we'd call toast() or toast.error()
-    // For now, let's just alert since we had trouble installing the component
-    // and I want to ensure the code works without complex setup.
-    // Better yet, I'll just implement a simple state-based toast in the page itself if needed,
-    // but the instruction imports `useToast`.
+  const toast = React.useCallback(({ title, description, variant }: ToastProps) => {
+    // Simple console-based toast implementation
+    // In production, you might want to use a toast library like sonner or react-hot-toast
+    const message = variant === 'destructive' 
+      ? `Error: ${title || 'An error occurred'}${description ? ` - ${description}` : ''}`
+      : `Success: ${title || 'Operation successful'}${description ? ` - ${description}` : ''}`
     
-    // Let's rely on standard browser alert for now as fallback if UI component missing?
-    // No, that's bad UX.
+    console.log(message)
     
-    // I will create a minimal implementation of useToast here.
-    console.log(`Toast: ${title} - ${description} (${variant})`)
-    if (variant === 'destructive') {
-      alert(`Error: ${title}\n${description}`)
-    } else {
-      alert(`Success: ${title}\n${description}`)
-    }
-  }
+    // Optional: You can implement a visual toast notification here
+    // For now, we'll just log to console to avoid blocking the UI
+  }, [])
 
   return { toast }
 }
