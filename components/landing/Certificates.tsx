@@ -57,13 +57,13 @@ export default function Certificates({ data }: { data: CertificateType[] | null 
                                 )}
                             </div>
 
-                            <div className="sm:ml-4 flex-1 min-w-0 text-center sm:text-left">
-                                <h3 className="font-bold text-[9px] sm:text-xs truncate group-hover:text-primary transition-colors">
+                            <div className="sm:ml-4 flex-1 min-w-0 flex flex-col justify-center text-center sm:text-left">
+                                <h3 className="font-bold text-[10px] sm:text-xs line-clamp-2 group-hover:text-primary transition-colors leading-tight mb-1">
                                     {cert.title}
                                 </h3>
-                                <div className="flex items-center justify-center sm:justify-start gap-1 sm:gap-2 mt-1">
-                                    <span className="text-[8px] sm:text-[10px] text-muted-foreground truncate">{cert.issuer}</span>
-                                    <ShieldCheck className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-green-500/70" />
+                                <div className="flex items-center justify-center sm:justify-start gap-1">
+                                    <span className="text-[9px] sm:text-[10px] text-muted-foreground line-clamp-1">{cert.issuer}</span>
+                                    <ShieldCheck className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-green-500/70 shrink-0" />
                                 </div>
                             </div>
                         </div>
