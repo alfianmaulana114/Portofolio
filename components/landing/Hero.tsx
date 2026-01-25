@@ -63,7 +63,7 @@ export default function Hero() {
                             <div className="p-6 font-mono text-xs leading-relaxed">
                                 <div className="space-y-1.5">
                                     <div>
-                                        <span className="text-purple-400">"name"</span>: <span className="text-blue-400">"Alfian"</span>,
+                                        <span className="text-purple-400">"name"</span>: <span className="text-blue-400">"Alfian Eka Maulana"</span>,
                                     </div>
                                     <div>
                                         <span className="text-purple-400">"focus"</span>: [

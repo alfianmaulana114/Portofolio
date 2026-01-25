@@ -36,14 +36,14 @@ export default function Certificates({ data }: { data: CertificateType[] | null 
                     <div className="h-px bg-border flex-1 ml-4"></div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 md:gap-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
                     {visibleCertificates.map((cert) => (
                         <div
                             key={cert.id}
-                            className="group flex flex-col sm:flex-row items-center p-3 rounded-lg border border-border bg-card hover:border-primary/30 transition-all shadow-sm cursor-pointer"
+                            className="group flex flex-col sm:flex-row items-center p-2 sm:p-3 rounded-lg border border-border bg-card hover:border-primary/30 transition-all shadow-sm cursor-pointer overflow-hidden h-full"
                             onClick={() => setSelectedCert(cert)}
                         >
-                            <div className="shrink-0 relative w-10 h-10 sm:w-12 sm:h-12 rounded bg-muted flex items-center justify-center overflow-hidden border border-border/50 mb-2 sm:mb-0">
+                            <div className="shrink-0 relative w-8 h-8 sm:w-12 sm:h-12 rounded bg-muted flex items-center justify-center overflow-hidden border border-border/50 mb-2 sm:mb-0">
                                 {cert.image_url ? (
                                     <Image
                                         src={cert.image_url}
@@ -53,17 +53,17 @@ export default function Certificates({ data }: { data: CertificateType[] | null 
                                         unoptimized
                                     />
                                 ) : (
-                                    <Award className="h-6 w-6 text-muted-foreground/30" />
+                                    <Award className="h-5 w-5 text-muted-foreground/30" />
                                 )}
                             </div>
 
-                            <div className="sm:ml-4 flex-1 min-w-0 flex flex-col justify-center text-center sm:text-left">
-                                <h3 className="font-bold text-[10px] sm:text-xs line-clamp-2 group-hover:text-primary transition-colors leading-tight mb-1">
+                            <div className="sm:ml-3 flex-1 min-w-0 w-full flex flex-col justify-center text-center sm:text-left">
+                                <h3 className="font-bold text-[9px] sm:text-xs line-clamp-2 group-hover:text-primary transition-colors leading-tight mb-0.5">
                                     {cert.title}
                                 </h3>
                                 <div className="flex items-center justify-center sm:justify-start gap-1">
-                                    <span className="text-[9px] sm:text-[10px] text-muted-foreground line-clamp-1">{cert.issuer}</span>
-                                    <ShieldCheck className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-green-500/70 shrink-0" />
+                                    <span className="text-[8px] sm:text-[10px] text-muted-foreground truncate max-w-full">{cert.issuer}</span>
+                                    <ShieldCheck className="h-2 w-2 sm:h-3 sm:w-3 text-green-500/70 shrink-0" />
                                 </div>
                             </div>
                         </div>
@@ -114,12 +114,7 @@ export default function Certificates({ data }: { data: CertificateType[] | null 
                             )}
 
                             <div className="flex flex-col gap-3">
-                                <div className="p-3 bg-muted/30 rounded-md border border-border/50">
-                                    <p className="text-[9px] font-black font-mono uppercase tracking-[0.1em] text-muted-foreground mb-1">Verify Credential</p>
-                                    <p className="text-[10px] text-foreground font-mono break-all opacity-80">
-                                        ID: {selectedCert.id.slice(0, 18)}...
-                                    </p>
-                                </div>
+
 
                                 {selectedCert.credential_url && (
                                     <Button asChild className="w-full bg-primary text-primary-foreground font-mono text-xs">

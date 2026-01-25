@@ -132,11 +132,7 @@ export default function Navbar() {
                     </Link>
                   ))}
                 </div>
-                <div className="absolute bottom-10 left-6 right-6 p-4 border border-border/50 rounded-lg bg-muted/10">
-                  <p className="font-mono text-[10px] text-muted-foreground text-center">
-                    Alfian Eka Maulana <br /> Portfolio v2.0
-                  </p>
-                </div>
+
               </SheetContent>
             </Sheet>
           </div>

@@ -49,7 +49,7 @@ export default function Footer() {
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold tracking-tight">Alfian Maulana</h3>
-                            <p className="text-muted-foreground text-sm font-medium">IT Enthusiast & S1 Sistem Informasi</p>
+                            <p className="text-muted-foreground text-sm font-medium">IT Enthusiast</p>
                         </div>
                         <div className="flex items-center gap-6">
                             {socialIcons.map((social, i) => (
