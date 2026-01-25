@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useTheme } from 'next-themes'
 
 export default function ParticlesBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const { theme } = useTheme()
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -20,9 +22,23 @@ export default function ParticlesBackground() {
             'NEXT', 'PY', 'TS', 'JS', 'VITE', 'FLUTTER', 'SUPA'
         ]
 
+        const getThemeColors = () => {
+            // Safe fallback for server-side or early render
+            if (typeof window === 'undefined') return { base: '#000000', accent: '#00ff9d' }
+
+            const style = getComputedStyle(document.documentElement)
+            return {
+                base: style.getPropertyValue('--foreground').trim() || '#000000',
+                accent: style.getPropertyValue('--primary').trim() || '#00ff9d',
+            }
+        }
+
+        let colors = getThemeColors()
+
         const resizeCanvas = () => {
             canvas.width = window.innerWidth
             canvas.height = window.innerHeight
+            colors = getThemeColors()
         }
 
         window.addEventListener('resize', resizeCanvas)
@@ -64,22 +80,28 @@ export default function ParticlesBackground() {
             draw() {
                 if (!ctx) return
                 const currentOpacity = this.isSpecial ? this.opacity * 2 : this.opacity
-                ctx.fillStyle = `rgba(0, 0, 0, ${currentOpacity})`
+
+                // Use updated colors
+                ctx.fillStyle = this.isSpecial ? colors.accent : colors.base
+                // Apply opacity manually since we store colors as hex mostly
+                ctx.globalAlpha = currentOpacity
 
                 if (this.type === 'dot') {
                     ctx.beginPath()
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
                     ctx.fill()
                 } else {
-                    ctx.font = `${this.isSpecial ? '900' : 'bold'} ${this.isSpecial ? '10px' : '7px'} JetBrains Mono, Courier New, monospace`
+                    ctx.font = `${this.isSpecial ? '900' : 'bold'} ${this.isSpecial ? '12px' : '9px'} JetBrains Mono, monospace`
                     ctx.fillText(this.label, this.x, this.y)
                 }
+
+                ctx.globalAlpha = 1.0 // Reset opacity
             }
         }
 
         const init = () => {
             particles = []
-            const numberOfParticles = Math.floor((canvas.width * canvas.height) / 8000)
+            const numberOfParticles = Math.floor((canvas.width * canvas.height) / 10000)
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle())
             }
@@ -106,13 +128,15 @@ export default function ParticlesBackground() {
                     const dy = a.y - b.y
                     const distance = Math.sqrt(dx * dx + dy * dy)
 
-                    if (distance < 120) {
+                    if (distance < 100) {
                         ctx.beginPath()
-                        ctx.strokeStyle = `rgba(0, 0, 0, ${0.06 - distance / 2000})`
-                        ctx.lineWidth = 0.3
+                        ctx.strokeStyle = colors.base
+                        ctx.globalAlpha = 0.05 - distance / 2000
+                        ctx.lineWidth = 0.5
                         ctx.moveTo(a.x, a.y)
                         ctx.lineTo(b.x, b.y)
                         ctx.stroke()
+                        ctx.globalAlpha = 1.0
                     }
                 }
             })
@@ -123,16 +147,23 @@ export default function ParticlesBackground() {
         init()
         animate()
 
+        // Re-init on theme change to update colors effectively
+        const observer = new MutationObserver(() => {
+            colors = getThemeColors()
+        })
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style'] })
+
         return () => {
             window.removeEventListener('resize', resizeCanvas)
+            observer.disconnect()
             cancelAnimationFrame(animationFrameId)
         }
-    }, [])
+    }, [theme]) // Re-run when theme changes
 
     return (
         <canvas
             ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-70"
+            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40 transition-opacity duration-1000"
         />
     )
 }

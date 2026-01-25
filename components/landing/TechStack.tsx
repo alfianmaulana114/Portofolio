@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Code2,
     Cloud,
@@ -10,62 +12,56 @@ import {
     Smartphone,
     Box,
     Activity,
-    Zap
+    CheckCircle2
 } from 'lucide-react'
 
 const techStack = [
-    { name: 'Flutter', icon: Smartphone, color: 'group-hover:text-[#02569B] group-hover:drop-shadow-[0_0_8px_rgba(2,86,155,0.4)]', comment: 'Cross-platform SDK', category: 'MOBILE' },
-    { name: 'Git', icon: Terminal, color: 'group-hover:text-[#F05032] group-hover:drop-shadow-[0_0_8px_rgba(240,80,50,0.4)]', comment: 'Branching/Merging', category: 'VCS' },
-    { name: 'Github', icon: Github, color: 'group-hover:text-[#181717] group-hover:drop-shadow-[0_0_8px_rgba(0,0,0,0.4)]', comment: 'Collaboration', category: 'REMOTE' },
-    { name: 'Google Cloud', icon: Cloud, color: 'group-hover:text-[#4285F4] group-hover:drop-shadow-[0_0_8px_rgba(66,133,244,0.4)]', comment: 'Cloud Infrastructure', category: 'CLOUD' },
-    { name: 'Javascript', icon: Code2, color: 'group-hover:text-[#F7DF1E] group-hover:drop-shadow-[0_0_8px_rgba(247,223,30,0.4)]', comment: 'ES6+ Logic', category: 'LANGUAGE' },
-    { name: 'Laravel', icon: Flame, color: 'group-hover:text-[#FF2D20] group-hover:drop-shadow-[0_0_8px_rgba(255,45,32,0.4)]', comment: 'Full-stack Artisan', category: 'FRAMEWORK' },
-    { name: 'MySQL', icon: Database, color: 'group-hover:text-[#4479A1] group-hover:drop-shadow-[0_0_8px_rgba(68,121,161,0.4)]', comment: 'RDBMS Queries', category: 'STORAGE' },
-    { name: 'Next.js', icon: Globe, color: 'group-hover:text-[#000000] group-hover:drop-shadow-[0_0_8px_rgba(0,0,0,0.4)]', comment: 'App Router / SSR', category: 'WEB' },
-    { name: 'Node JS', icon: Box, color: 'group-hover:text-[#339933] group-hover:drop-shadow-[0_0_8px_rgba(51,153,51,0.4)]', comment: 'V8 Engine Runtime', category: 'RUNTIME' },
-    { name: 'PHP', icon: Code2, color: 'group-hover:text-[#777BB4] group-hover:drop-shadow-[0_0_8px_rgba(119,123,180,0.4)]', comment: 'Server side 8.x', category: 'LANGUAGE' },
-    { name: 'Python', icon: Code2, color: 'group-hover:text-[#3776AB] group-hover:drop-shadow-[0_0_8px_rgba(55,118,171,0.4)]', comment: 'Backend Scripting', category: 'LANGUAGE' },
-    { name: 'React', icon: Cpu, color: 'group-hover:text-[#61DAFB] group-hover:drop-shadow-[0_0_8px_rgba(97,218,251,0.4)]', comment: 'Component-based UI', category: 'LIBRARY' },
-    { name: 'Supabase', icon: Database, color: 'group-hover:text-[#3ECF8E] group-hover:drop-shadow-[0_0_8px_rgba(62,207,142,0.4)]', comment: 'PostgreSQL BaaS', category: 'BACKEND' },
-    { name: 'Typescript', icon: Code2, color: 'group-hover:text-[#3178C6] group-hover:drop-shadow-[0_0_8px_rgba(49,120,198,0.4)]', comment: 'Static Typing', category: 'LANGUAGE' },
-    { name: 'Vite', icon: Flame, color: 'group-hover:text-[#646CFF] group-hover:drop-shadow-[0_0_8px_rgba(100,108,255,0.4)]', comment: 'Module Bundler', category: 'TOOL' }
+    { name: 'flutter', icon: Smartphone, color: 'text-blue-500', category: 'mobile' },
+    { name: 'git', icon: Terminal, color: 'text-orange-500', category: 'tool' },
+    { name: 'github', icon: Github, color: 'text-foreground', category: 'vcs' },
+    { name: 'gcp', icon: Cloud, color: 'text-blue-400', category: 'cloud' },
+    { name: 'javascript', icon: Code2, color: 'text-yellow-400', category: 'lang' },
+    { name: 'laravel', icon: Flame, color: 'text-red-500', category: 'framework' },
+    { name: 'mysql', icon: Database, color: 'text-blue-600', category: 'db' },
+    { name: 'next.js', icon: Globe, color: 'text-foreground', category: 'framework' },
+    { name: 'node', icon: Box, color: 'text-green-600', category: 'runtime' },
+    { name: 'php', icon: Code2, color: 'text-indigo-400', category: 'lang' },
+    { name: 'python', icon: Code2, color: 'text-blue-500', category: 'lang' },
+    { name: 'react', icon: Cpu, color: 'text-cyan-400', category: 'library' },
+    { name: 'supabase', icon: Database, color: 'text-green-400', category: 'baas' },
+    { name: 'typescript', icon: Code2, color: 'text-blue-600', category: 'lang' },
+    { name: 'vite', icon: Flame, color: 'text-purple-500', category: 'tool' }
 ].sort((a, b) => a.name.localeCompare(b.name))
 
 export default function TechStack() {
     return (
-        <section id="techstack" className="py-8 bg-transparent relative overflow-hidden">
-            <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
-                <div className="flex flex-col items-center mb-12 text-center">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Activity size={16} className="text-yellow-500 animate-pulse" />
-                        <span className="text-[10px] md:text-[12px] font-black tracking-[0.5em]">SYSTEM_MODULES_01</span>
-                    </div>
-                    <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic">TECH STACK</h2>
-                    <div className="h-1.5 w-16 bg-black"></div>
+        <section id="techstack" className="py-8 relative overflow-hidden bg-background">
+            <div className="container mx-auto px-4 md:px-8 max-w-[1000px] relative z-10">
+
+                <div className="flex items-center gap-2 mb-8 font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
+                    <Activity className="h-3 w-3 text-primary animate-pulse" />
+                    <span>system_modules</span>
+                    <div className="h-px bg-border flex-1 ml-2"></div>
                 </div>
 
-                <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                     {techStack.map((tech) => (
-                        <div key={tech.name} className="group relative">
-                            <div className="relative bg-white border border-black p-2 md:p-4 flex flex-col items-center justify-center gap-1 md:gap-3 transition-all duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:shadow-none overflow-hidden">
-
-                                <div className={`transition-all duration-500 transform group-hover:scale-110 ${tech.color}`}>
-                                    <tech.icon className="h-6 w-6 md:h-10 md:w-10 stroke-[1.5px]" />
-                                </div>
-
-                                <div className="flex flex-col items-center text-center">
-                                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-tighter truncate w-full">
-                                        {tech.name}
-                                    </span>
-                                </div>
-
-                                <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block">
-                                    <Zap size={8} className="text-yellow-400 fill-yellow-400" />
-                                </div>
+                        <div key={tech.name} className="flex items-center gap-3 p-2.5 rounded border border-border bg-card/50 hover:bg-muted/50 transition-all group cursor-default">
+                            <div className={`p-1.5 rounded bg-muted ${tech.color} bg-opacity-10 group-hover:bg-opacity-20 transition-all`}>
+                                <tech.icon className={`h-4 w-4 ${tech.color}`} />
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                                <span className="font-bold text-xs truncate group-hover:text-primary transition-colors">
+                                    {tech.name}
+                                </span>
+                                <span className="text-[9px] text-muted-foreground font-mono uppercase opacity-60">
+                                    {tech.category}
+                                </span>
                             </div>
                         </div>
                     ))}
                 </div>
+
             </div>
         </section>
     )

@@ -1,34 +1,69 @@
+'use client'
+
+import { FileText, Code2, Rocket, Brain, GraduationCap } from 'lucide-react'
+
 export default function About() {
     return (
-        <section id="about" className="py-12 md:py-20 mt-12 md:mt-20 bg-transparent relative overflow-hidden">
-            {/* Decorative Binary Background Fragment */}
-            <div className="absolute top-10 right-[-20px] font-black text-[40px] md:text-[60px] opacity-[0.03] select-none rotate-12 hidden md:block text-black">
-                01010110
-            </div>
-            <div className="absolute bottom-10 left-[-20px] font-black text-[40px] md:text-[60px] opacity-[0.03] select-none -rotate-12 hidden md:block text-black">
-                {"<Dev />"}
-            </div>
+        <section id="about" className="py-8 relative overflow-hidden bg-muted/5">
+            <div className="container mx-auto max-w-[1000px] px-4">
 
-            <div className="container mx-auto max-w-[1200px] px-4 md:px-8 relative z-10">
-                <div className="flex flex-col items-center mb-10 text-center">
-                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase text-black">TENTANG SAYA</h2>
-                    <div className="h-1.5 w-16 bg-black"></div>
+                {/* Section Title as Directory Path */}
+                <div className="flex items-center gap-2 mb-8 font-mono text-[10px] text-muted-foreground opacity-70 uppercase tracking-widest">
+                    <span className="text-primary">~/alfian</span>
+                    <span>/</span>
+                    <span className="text-foreground">readme.md</span>
                 </div>
 
-                <div className="relative group">
-                    {/* Technical Accent Lines */}
-                    <div className="absolute -top-4 -left-4 w-12 h-1 px-1 bg-black hidden md:block group-hover:w-20 transition-all duration-500"></div>
-                    <div className="absolute -top-4 -left-4 w-1 h-12 py-1 bg-black hidden md:block group-hover:h-20 transition-all duration-500"></div>
+                {/* README Card */}
+                <div className="border border-border rounded-lg bg-card shadow-lg overflow-hidden border-primary/10">
 
-                    <div className="relative bg-white p-5 md:p-8 border-2 md:border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all duration-300">
-                        <p className="text-sm md:text-lg font-bold text-gray-800 leading-relaxed text-center md:text-left">
-                            Saya seorang mahasiswa aktif program studi S1 Sistem Informasi di Universitas Bina Sarana Informatika.
-                            Merupakan individu yang proaktif dengan kemampuan interpersonal yang baik, dan aktif terlibat dalam organisasi
-                            kemahasiswaan UKM Jurnalistik Universitas Bina Sarana Informatika. Memiliki pengalaman magang dibagian
-                            arsip dan dokumentasi di Museum Nasional Indonesia. Memiliki keterampilan dan minat belajar terutama
-                            dalam bidang project management, cloud computing, software development dan sangat terbuka
-                            untuk mengeksplorasi kesempatan lainnya.
-                        </p>
+                    {/* Header */}
+                    <div className="bg-muted/50 border-b border-border p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <FileText className="h-4 w-4 text-primary" />
+                            <span className="font-mono text-sm font-bold">ABOUT_ALFIAN.md</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-[10px] font-mono text-muted-foreground opacity-50">
+                            <span>Markdown</span>
+                            <span>UTF-8</span>
+                        </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-8 md:p-12">
+                        <article className="font-sans text-base md:text-lg selection:bg-primary/20">
+                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-foreground">
+                                <span className="text-primary text-xl">#</span> Hello, I'm Alfian.
+                            </h2>
+
+                            <div className="space-y-6 text-muted-foreground leading-relaxed">
+                                <p>
+                                    I am an <strong className="text-foreground font-black">IT Enthusiast</strong> continuously exploring and creating innovative technological solutions. My dedication is focused on developing expertise in <span className="text-primary font-bold">Software Development</span>, <span className="text-primary font-bold">Cloud Computing</span>, and <span className="text-primary font-bold">Project Management</span>.
+                                </p>
+
+                                <p>
+                                    Currently, I am pursuing a <strong className="text-foreground">Bachelor's Degree in Information Systems at Bina Sarana Informatika University</strong>. This formal education provides me with a strong theoretical foundation, while my independent projects offer practical experience in building efficient systems.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-6 pt-6">
+                                    <div className="bg-background/50 p-6 rounded-xl border border-border group hover:border-primary/30 transition-all shadow-sm">
+                                        <GraduationCap className="h-6 w-6 text-primary mb-3" />
+                                        <h3 className="text-sm font-bold text-foreground mb-2 uppercase tracking-tight">Education</h3>
+                                        <p className="text-xs leading-relaxed">
+                                            Currently pursuing a <span className="text-foreground font-bold italic">Bachelor of Information Systems</span> at <strong className="text-primary">Bina Sarana Informatika University</strong>. Focused on system analysis, data management, and software engineering.
+                                        </p>
+                                    </div>
+
+                                    <div className="bg-background/50 p-6 rounded-xl border border-border group hover:border-primary/30 transition-all shadow-sm">
+                                        <Code2 className="h-6 w-6 text-primary mb-3" />
+                                        <h3 className="text-sm font-bold text-foreground mb-2 uppercase tracking-tight">Technical Focus</h3>
+                                        <p className="text-xs leading-relaxed">
+                                            Highly interested in building modern, responsive, and scalable web applications using <span className="text-foreground font-bold">TypeScript</span>, <span className="text-foreground font-bold">React/Next.js</span>, and <span className="text-foreground font-bold">Laravel</span>.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>

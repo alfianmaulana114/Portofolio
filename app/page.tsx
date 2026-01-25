@@ -10,7 +10,6 @@ import GithubActivity from "@/components/landing/GithubActivity";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/shared/Footer";
 import ParticlesBackground from '@/components/landing/ParticlesBackground';
-import ScrollProgress from '@/components/shared/ScrollProgress';
 
 export const revalidate = 0; // Ensure dynamic data fetching
 
@@ -38,36 +37,33 @@ export default async function Home() {
   const organisasiExp = experiences?.filter(e => e.category === 'Organisasi') || []
 
   return (
-    <main className="min-h-screen bg-white relative selection:bg-black selection:text-white">
+    <main className="min-h-screen bg-background text-foreground relative selection:bg-primary/30">
       <ParticlesBackground />
       <Navbar />
 
-      <div className="pt-0 relative">
-        {/* Horizontal decorative lines for tech feel */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[20%] left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[40%] left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[60%] left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[80%] left-0 w-full h-[1px] bg-black/5"></div>
-
+      <div className="relative">
         <Hero />
-        <About />
-        <TechStack />
 
-        {/* Render professional experiences */}
-        {profesionalExp.length > 0 && (
-          <Experience data={profesionalExp} title="PENGALAMAN KERJA" />
-        )}
+        {/* Neat & Close Sections Container */}
+        <div className="pb-8">
+          <About />
+          <TechStack />
 
-        {/* Render organization experiences */}
-        {organisasiExp.length > 0 && (
-          <Experience data={organisasiExp} title="PENGALAMAN ORGANISASI" />
-        )}
+          {/* Render professional experiences */}
+          {profesionalExp.length > 0 && (
+            <Experience data={profesionalExp} title="WORK EXPERIENCE" />
+          )}
 
-        <Projects data={projects} />
-        <Certificates data={certificates} />
-        <GithubActivity />
-        <CTA />
+          {/* Render organization experiences */}
+          {organisasiExp.length > 0 && (
+            <Experience data={organisasiExp} title="ORGANIZATIONAL EXPERIENCE" />
+          )}
+
+          <Projects data={projects} />
+          <Certificates data={certificates} />
+          <GithubActivity />
+          <CTA />
+        </div>
       </div>
       <Footer />
 
