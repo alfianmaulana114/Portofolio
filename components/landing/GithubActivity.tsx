@@ -135,7 +135,7 @@ export default function GithubActivity() {
                         </div>
                     </div>
 
-                    <div className="flex justify-center min-h-[160px] items-center overflow-x-auto pb-6 custom-scrollbar">
+                    <div className="flex justify-start md:justify-center min-h-[160px] items-center overflow-x-auto pb-6 custom-scrollbar">
                         {loading ? (
                             <div className="flex flex-col items-center gap-2 text-gray-400 italic">
                                 <Loader2 className="h-8 w-8 animate-spin" />
