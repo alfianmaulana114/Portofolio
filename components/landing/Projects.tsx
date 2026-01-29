@@ -13,7 +13,11 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
+import { AnimatedContent } from '@/components/react-bits/AnimatedContent'
+import { TiltedCard } from '@/components/react-bits/TiltedCard'
+import { TextReveal } from '@/components/react-bits/TextReveal'
+import { Parallax } from '@/components/react-bits/Parallax'
 
 export default function Projects({ data }: { data: ProjectType[] | null }) {
     const [showAll, setShowAll] = useState(false)
@@ -29,63 +33,96 @@ export default function Projects({ data }: { data: ProjectType[] | null }) {
     const visibleProjects = showAll ? sortedData : sortedData.slice(0, 6)
 
     return (
-        <section id="projects" className="py-8 relative bg-background">
+        <section id="projects" className="py-8 relative bg-background overflow-hidden">
             <div className="container mx-auto px-4 md:px-8 max-w-[1000px] relative z-10">
 
-                <div className="flex items-center gap-2 mb-10 font-mono text-sm uppercase tracking-tight">
-                    <Folder className="h-4 w-4 text-primary" />
-                    <h2 className="font-bold">Latest Repositories</h2>
-                    <div className="h-px bg-border flex-1 ml-4"></div>
-                </div>
+                <Parallax speed={0.3} offset={[0, 0.5]}>
+                    <div className="flex items-center gap-2 mb-10 font-mono text-sm uppercase tracking-tight">
+                        <Folder className="h-4 w-4 text-primary" />
+                        <TextReveal 
+                            text="Latest Repositories" 
+                            className="font-bold"
+                            delay={0.2}
+                            duration={0.8}
+                            direction="bottom"
+                            distance={20}
+                        />
+                        <div className="h-px bg-border flex-1 ml-4"></div>
+                    </div>
+                </Parallax>
 
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-                    {visibleProjects.map((project) => (
-                        <div key={project.id} className="group cursor-pointer" onClick={() => setSelectedProject(project)}>
-                            <CodeCard hideHeader className="h-full flex flex-col border-border/80 bg-card hover:border-primary/40 transition-all shadow-sm">
-                                {project.image_url && (
-                                    <div className="relative w-full h-24 sm:h-36 border-b border-border overflow-hidden bg-muted/20">
-                                        <Image
-                                            src={project.image_url}
-                                            alt={project.title}
-                                            fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                            unoptimized
-                                        />
-                                    </div>
-                                )}
+                    {visibleProjects.map((project, index) => (
+                        <AnimatedContent
+                            key={project.id}
+                            direction="bottom"
+                            distance={40}
+                            duration={0.6}
+                            delay={0.1 + (index * 0.15)}
+                        >
+                            <TiltedCard
+                                maxTilt={8}
+                                perspective={1000}
+                                glare={true}
+                                glareColor="rgba(97, 218, 251, 0.2)"
+                                scale={1.02}
+                                transitionDuration={0.2}
+                            >
+                                <div className="group cursor-pointer" onClick={() => setSelectedProject(project)}>
+                                    <CodeCard hideHeader className="h-full flex flex-col border-border/80 bg-card hover:border-primary/40 transition-all shadow-sm">
+                                        {project.image_url && (
+                                            <div className="relative w-full h-24 sm:h-36 border-b border-border overflow-hidden bg-muted/20">
+                                                <Image
+                                                    src={project.image_url}
+                                                    alt={project.title}
+                                                    fill
+                                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                                    unoptimized
+                                                />
+                                            </div>
+                                        )}
 
-                                <div className="p-3 sm:p-5 flex-1 flex flex-col">
-                                    <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
-                                        <h3 className="font-bold text-[10px] sm:text-sm text-foreground group-hover:text-primary transition-colors truncate">
-                                            {project.title}
-                                        </h3>
-                                    </div>
+                                        <div className="p-3 sm:p-5 flex-1 flex flex-col">
+                                            <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
+                                                <h3 className="font-bold text-[10px] sm:text-sm text-foreground group-hover:text-primary transition-colors truncate">
+                                                    {project.title}
+                                                </h3>
+                                            </div>
 
-                                    <p className="text-muted-foreground text-[9px] sm:text-[11px] leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
-                                        {project.description}
-                                    </p>
+                                            <p className="text-muted-foreground text-[9px] sm:text-[11px] leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
+                                                {project.description}
+                                            </p>
 
-                                    <div className="mt-auto flex items-center justify-between pt-3 sm:pt-4 border-t border-border/50">
-                                        <div className="flex items-center gap-1 sm:gap-2 font-mono text-[8px] sm:text-[9px] text-muted-foreground uppercase">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                            {project.role || "Dev"}
+                                            <div className="mt-auto flex items-center justify-between pt-3 sm:pt-4 border-t border-border/50">
+                                                <div className="flex items-center gap-1 sm:gap-2 font-mono text-[8px] sm:text-[9px] text-muted-foreground uppercase">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                                                    {project.role || "Dev"}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </CodeCard>
                                 </div>
-                            </CodeCard>
-                        </div>
+                            </TiltedCard>
+                        </AnimatedContent>
                     ))}
                 </div>
 
                 {sortedData.length > 6 && (
-                    <div className="mt-12 flex justify-center">
-                        <button
-                            onClick={() => setShowAll(!showAll)}
-                            className="px-8 py-2 border border-border rounded text-[10px] font-mono uppercase tracking-widest hover:bg-muted transition-colors"
-                        >
-                            {showAll ? './view_less' : './load_more'}
-                        </button>
-                    </div>
+                    <AnimatedContent
+                        direction="top"
+                        distance={30}
+                        duration={0.6}
+                        delay={0.5}
+                    >
+                        <div className="mt-12 flex justify-center">
+                            <button
+                                onClick={() => setShowAll(!showAll)}
+                                className="px-8 py-2 border border-border rounded text-[10px] font-mono uppercase tracking-widest hover:bg-muted transition-colors"
+                            >
+                                {showAll ? './view_less' : './load_more'}
+                            </button>
+                        </div>
+                    </AnimatedContent>
                 )}
             </div>
 

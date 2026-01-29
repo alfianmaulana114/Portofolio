@@ -14,6 +14,8 @@ import {
     Activity,
     CheckCircle2
 } from 'lucide-react'
+import { AnimatedContent } from '@/components/react-bits/AnimatedContent'
+import { TiltedCard } from '@/components/react-bits/TiltedCard'
 
 const techStack = [
     { name: 'flutter', icon: Smartphone, color: 'text-blue-500', category: 'mobile' },
@@ -38,27 +40,51 @@ export default function TechStack() {
         <section id="techstack" className="py-8 relative overflow-hidden bg-background">
             <div className="container mx-auto px-4 md:px-8 max-w-[1000px] relative z-10">
 
-                <div className="flex items-center gap-2 mb-8 font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
-                    <Activity className="h-3 w-3 text-primary animate-pulse" />
-                    <span>system_modules</span>
-                    <div className="h-px bg-border flex-1 ml-2"></div>
-                </div>
+                <AnimatedContent 
+                    direction="top" 
+                    distance={30} 
+                    duration={0.8} 
+                    delay={0.2}
+                >
+                    <div className="flex items-center gap-2 mb-8 font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
+                        <Activity className="h-3 w-3 text-primary animate-pulse" />
+                        <span>system_modules</span>
+                        <div className="h-px bg-border flex-1 ml-2"></div>
+                    </div>
+                </AnimatedContent>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                    {techStack.map((tech) => (
-                        <div key={tech.name} className="flex items-center gap-3 p-2.5 rounded border border-border bg-card/50 hover:bg-muted/50 transition-all group cursor-default">
-                            <div className={`p-1.5 rounded bg-muted ${tech.color} bg-opacity-10 group-hover:bg-opacity-20 transition-all`}>
-                                <tech.icon className={`h-4 w-4 ${tech.color}`} />
-                            </div>
-                            <div className="flex flex-col min-w-0">
-                                <span className="font-bold text-xs truncate group-hover:text-primary transition-colors">
-                                    {tech.name}
-                                </span>
-                                <span className="text-[9px] text-muted-foreground font-mono uppercase opacity-60">
-                                    {tech.category}
-                                </span>
-                            </div>
-                        </div>
+                    {techStack.map((tech, index) => (
+                        <AnimatedContent
+                            key={tech.name}
+                            direction="bottom"
+                            distance={40}
+                            duration={0.6}
+                            delay={0.3 + (index * 0.1)}
+                        >
+                            <TiltedCard
+                                maxTilt={8}
+                                perspective={1000}
+                                glare={true}
+                                glareColor="rgba(97, 218, 251, 0.2)"
+                                scale={1.02}
+                                transitionDuration={0.2}
+                            >
+                                <div className="flex items-center gap-3 p-2.5 rounded border border-border bg-card/50 hover:bg-muted/50 transition-all group cursor-default h-full">
+                                    <div className={`p-1.5 rounded bg-muted ${tech.color} bg-opacity-10 group-hover:bg-opacity-20 transition-all`}>
+                                        <tech.icon className={`h-4 w-4 ${tech.color}`} />
+                                    </div>
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="font-bold text-xs truncate group-hover:text-primary transition-colors">
+                                            {tech.name}
+                                        </span>
+                                        <span className="text-[9px] text-muted-foreground font-mono uppercase opacity-60">
+                                            {tech.category}
+                                        </span>
+                                    </div>
+                                </div>
+                            </TiltedCard>
+                        </AnimatedContent>
                     ))}
                 </div>
 

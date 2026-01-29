@@ -9,7 +9,6 @@ import Projects from "@/components/landing/Projects";
 import GithubActivity from "@/components/landing/GithubActivity";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/shared/Footer";
-import ParticlesBackground from '@/components/landing/ParticlesBackground';
 
 export const revalidate = 0; // Ensure dynamic data fetching
 
@@ -38,7 +37,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground relative selection:bg-primary/30">
-      <ParticlesBackground />
       <Navbar />
 
       <div className="relative">

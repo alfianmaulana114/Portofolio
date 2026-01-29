@@ -109,32 +109,33 @@ export default function Navbar() {
 
           {/* Mobile Menu Trigger */}
           <div className="md:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9 p-0 hover:bg-primary/10 transition-colors">
-                  <Menu className="h-5 w-5 text-primary" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[80%] max-w-[300px] border-l border-border bg-background p-6">
-                <SheetTitle className="text-left font-mono text-sm font-bold text-primary mb-8 border-b border-border pb-4">
-                  MENU_NAVIGATION
-                </SheetTitle>
-                <div className="flex flex-col gap-4">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-between p-3 rounded-md border border-border/50 bg-muted/20 text-xs font-mono text-foreground hover:border-primary/50 hover:bg-primary/5 transition-all"
-                    >
-                      <span>{item.name}</span>
-                      <Terminal className="h-3 w-3 text-primary opacity-50" />
-                    </Link>
-                  ))}
-                </div>
-
-              </SheetContent>
-            </Sheet>
+            {mounted && (
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-9 w-9 p-0 hover:bg-primary/10 transition-colors">
+                    <Menu className="h-5 w-5 text-primary" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[80%] max-w-[300px] border-l border-border bg-background p-6">
+                  <SheetTitle className="text-left font-mono text-sm font-bold text-primary mb-8 border-b border-border pb-4">
+                    MENU_NAVIGATION
+                  </SheetTitle>
+                  <div className="flex flex-col gap-4">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center justify-between p-3 rounded-md border border-border/50 bg-muted/20 text-xs font-mono text-foreground hover:border-primary/50 hover:bg-primary/5 transition-all"
+                      >
+                        <span>{item.name}</span>
+                        <Terminal className="h-3 w-3 text-primary opacity-50" />
+                      </Link>
+                    ))}
+                  </div>
+                </SheetContent>
+              </Sheet>
+            )}
           </div>
         </div>
       </div>
