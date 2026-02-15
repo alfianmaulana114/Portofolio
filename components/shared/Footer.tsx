@@ -7,10 +7,13 @@ export default function Footer() {
             <div className="container mx-auto max-w-[1200px] flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
                     <Link href="/" className="font-sans text-2xl font-black tracking-tighter text-black hover:italic transition-all">
-                        ALFIAN
+                        Alfian Maulana
                     </Link>
                     <p className="text-sm text-gray-500 font-medium">
-                        © {new Date().getFullYear()} Alfian Maulana. All rights reserved.
+                        IT Enthusiast
+                    </p>
+                    <p className="text-sm text-gray-500 font-medium">
+                        Copyright © 2026 Alfian Maulana. All rights reserved.
                     </p>
                 </div>
 

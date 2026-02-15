@@ -80,19 +80,19 @@ export default function GithubActivity() {
     return (
         <section id="github" className="py-12 bg-transparent relative overflow-hidden">
             <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
-                <div className="flex flex-col items-center mb-10 text-center">
+                    <div className="flex flex-col items-center mb-10 text-center">
                     <div className="flex items-center gap-2 mb-2">
                         <Activity size={14} className="text-gray-400" />
-                        <span className="text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">ACTIVITY_FEED</span>
+                        <span className="text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">GitHub Activity</span>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase italic text-black">GITHUB ACTIVITY</h2>
+                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase italic text-black">GitHub Activity</h2>
                     <div className="h-1.5 w-16 bg-black"></div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 md:gap-4 mb-8">
                     {[
-                        { label: 'TOTAL REPOS', value: stats?.public_repos || '0', icon: BookOpen },
-                        { label: 'PROFIL', value: 'ALFIAN', icon: Github, link: `https://github.com/${username}` }
+                        { label: 'Total Repositories', value: stats?.public_repos ?? '0', icon: BookOpen },
+                        { label: 'View profile', value: `@${username}`, icon: Github, link: `https://github.com/${username}` }
                     ].map((stat, i) => (
                         <div
                             key={i}
@@ -114,8 +114,8 @@ export default function GithubActivity() {
                         <div className="flex items-center gap-3">
                             <Calendar size={20} />
                             <div>
-                                <span className="text-sm font-black uppercase tracking-tight italic block">Contribution Graph</span>
-                                <span className="text-[10px] font-bold text-gray-500">{totalContributions} contributions in {selectedYear}</span>
+                                <span className="text-sm font-black uppercase tracking-tight italic block">Contribution Grid</span>
+                                <span className="text-[10px] font-bold text-gray-500">Yearly Commits: {totalContributions} in {selectedYear}</span>
                             </div>
                         </div>
 
@@ -139,7 +139,7 @@ export default function GithubActivity() {
                         {loading ? (
                             <div className="flex flex-col items-center gap-2 text-gray-400 italic">
                                 <Loader2 className="h-8 w-8 animate-spin" />
-                                <span className="text-xs font-black">SYNCING_WITH_GITHUB...</span>
+                                <span className="text-xs font-black">Syncing_Data</span>
                             </div>
                         ) : contributions.length > 0 ? (
                             <div className="relative p-4 border border-black/5 bg-[#fcfcfc] rounded-sm">

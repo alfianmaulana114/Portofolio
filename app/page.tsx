@@ -56,12 +56,12 @@ export default async function Home() {
 
         {/* Render professional experiences */}
         {profesionalExp.length > 0 && (
-          <Experience data={profesionalExp} title="PENGALAMAN KERJA" />
+          <Experience data={profesionalExp} title="WORK EXPERIENCE" />
         )}
 
         {/* Render organization experiences */}
         {organisasiExp.length > 0 && (
-          <Experience data={organisasiExp} title="PENGALAMAN ORGANISASI" />
+          <Experience data={organisasiExp} title="ORGANIZATION EXPERIENCE" />
         )}
 
         <Projects data={projects} />

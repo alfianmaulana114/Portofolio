@@ -35,15 +35,15 @@ export default function Hero() {
 
                 <div className="flex flex-col gap-4 md:gap-6 text-center md:text-left items-center md:items-start animate-in slide-in-from-left duration-1000">
                     <div className="flex items-center gap-2 px-3 py-1 bg-yellow-400 border-2 border-black w-fit shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                        <span className="text-[10px] font-black uppercase tracking-tighter">Status: Open to Work</span>
+                        <span className="text-[10px] font-black uppercase tracking-tighter">ONLINE</span>
                     </div>
 
                     <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-black leading-[1.1] uppercase">
-                        HALO, SAYA <br className="md:hidden" /> <span className=" decoration-4 ">ALFIAN.</span>
+                        HELLO, I AM <br className="md:hidden" /> <span className=" decoration-4 ">ALFIAN.</span>
                     </h1>
 
                     <p className="text-sm md:text-xl text-gray-800 max-w-lg leading-relaxed font-bold border-black md:border-l-4 border-l-0 md:pl-4 px-2 md:px-4">
-                        Saya adalah seorang pembelajar yang antusias di dunia teknologi. Memiliki dedikasi penuh untuk mendalami Project Management, Cloud Computing, dan Software Development.
+                        An IT Enthusiast continuously exploring and creating innovative technological solutions. Focused on Software Development, Cloud Computing, and Project Management.
                     </p>
 
                     <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2 md:pt-4 w-full">

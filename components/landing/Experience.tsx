@@ -22,9 +22,9 @@ function ExpandableDescription({ text }: { text: string }) {
                     className="flex items-center gap-0.5 text-[8px] md:text-[10px] font-black uppercase text-black hover:underline mt-1"
                 >
                     {isExpanded ? (
-                        <>LIHAT SEDIKIT <ChevronUp size={12} /></>
+                        <>SHOW LESS <ChevronUp size={12} /></>
                     ) : (
-                        <>LIHAT SELENGKAPNYA <ChevronDown size={12} /></>
+                        <>READ MORE <ChevronDown size={12} /></>
                     )}
                 </button>
             )}
@@ -64,7 +64,7 @@ export default function Experience({ data, title = "PENGALAMAN" }: { data: Exper
                 <div className="flex flex-col items-center mb-10 text-center">
                     <div className="flex items-center gap-2 mb-2">
                         <Terminal size={12} className="text-gray-400" />
-                        <span className="text-[10px] font-black tracking-[0.3em] text-gray-400">HISTORY.LOG</span>
+                        <span className="text-[10px] font-black tracking-[0.3em] text-gray-400">--git-log</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tighter uppercase italic">{title}</h2>
                     <div className="h-1.5 w-16 bg-black"></div>
@@ -124,7 +124,7 @@ export default function Experience({ data, title = "PENGALAMAN" }: { data: Exper
                             onClick={handleToggle}
                             className="bg-black text-white px-8 py-3 font-black uppercase tracking-[0.2em] text-sm italic hover:bg-white hover:text-black border-2 border-black transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none translate-x-[-3px] translate-y-[-3px] active:translate-x-0 active:translate-y-0"
                         >
-                            {showAll ? 'LIHAT SEDIKIT' : `LIHAT SEMUA ${title}`}
+                            {showAll ? 'SHOW LESS' : `VIEW ALL ${title}`}
                         </button>
                     </div>
                 )}

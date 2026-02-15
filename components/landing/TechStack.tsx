@@ -40,7 +40,7 @@ export default function TechStack() {
                         <Activity size={16} className="text-yellow-500 animate-pulse" />
                         <span className="text-[10px] md:text-[12px] font-black tracking-[0.5em]">SYSTEM_MODULES_01</span>
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic">TECH STACK</h2>
+                    <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic">Tech Stack</h2>
                     <div className="h-1.5 w-16 bg-black"></div>
                 </div>
 

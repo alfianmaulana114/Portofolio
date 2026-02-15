@@ -22,9 +22,9 @@ function ExpandableDescription({ text }: { text: string }) {
                     className="flex items-center gap-0.5 text-[8px] md:text-[9px] font-black uppercase text-black hover:underline"
                 >
                     {isExpanded ? (
-                        <>LIHAT SEDIKIT <ChevronUp size={10} /></>
+                        <>SHOW LESS <ChevronUp size={10} /></>
                     ) : (
-                        <>LIHAT SELENGKAPNYA <ChevronDown size={10} /></>
+                        <>READ MORE <ChevronDown size={10} /></>
                     )}
                 </button>
             )}
@@ -62,7 +62,7 @@ export default function Projects({ data }: { data: ProjectType[] | null }) {
                         <Code size={14} className="text-gray-400" />
                         <span className="text-[10px] font-black tracking-[0.2em] text-gray-400">REPOSITORY</span>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase italic">PROJEK TERBARU</h2>
+                    <h2 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter uppercase italic">PROJECTS</h2>
                     <div className="h-1.5 w-16 bg-black"></div>
                 </div>
 
@@ -129,7 +129,7 @@ export default function Projects({ data }: { data: ProjectType[] | null }) {
                             onClick={handleToggle}
                             className="bg-black text-white px-8 py-3 font-black uppercase tracking-[0.2em] text-sm italic hover:bg-white hover:text-black border-2 border-black transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none translate-x-[-3px] translate-y-[-3px] active:translate-x-0 active:translate-y-0"
                         >
-                            {showAll ? 'LIHAT SEDIKIT' : 'LIHAT SEMUA PROYEK'}
+                            {showAll ? 'SHOW LESS' : 'VIEW ALL PROJECTS'}
                         </button>
                     </div>
                 )}
