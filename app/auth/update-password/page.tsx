@@ -1,7 +1,7 @@
 'use client'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -13,23 +13,44 @@ export default function UpdatePasswordPage() {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const [sessionReady, setSessionReady] = useState(false)
+    const [error, setError] = useState<string | null>(null)
     const router = useRouter()
     const { toast } = useToast()
-    const supabase = useMemo(() => createClient(), [])
 
     useEffect(() => {
+        let cancelled = false
+
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-            if (event === 'PASSWORD_RECOVERY') {
+            if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+                cancelled = true
                 setSessionReady(true)
             }
         })
 
         supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session) setSessionReady(true)
+            if (session && !cancelled) {
+                cancelled = true
+                setSessionReady(true)
+            }
         })
 
-        return () => subscription?.unsubscribe()
-    }, [supabase])
+        const timer = setTimeout(async () => {
+            if (cancelled) return
+            const { data: { session } } = await supabase.auth.getSession()
+            if (session) {
+                cancelled = true
+                setSessionReady(true)
+                return
+            }
+            setError('Token tidak valid atau sudah kedaluwarsa. Silakan minta link reset password baru.')
+        }, 5000)
+
+        return () => {
+            subscription?.unsubscribe()
+            clearTimeout(timer)
+            cancelled = true
+        }
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -59,13 +80,25 @@ export default function UpdatePasswordPage() {
         }
     }
 
-    if (!sessionReady) {
+    if (!sessionReady && !error) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
                 <Card className="p-10 w-full max-w-md border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rounded-none text-center">
                     <h1 className="text-2xl font-black uppercase tracking-tighter mb-4">VERIFIKASI...</h1>
                     <div className="h-2 w-20 bg-black mx-auto"></div>
                     <p className="mt-6 text-sm font-medium">Memverifikasi token reset password...</p>
+                </Card>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+                <Card className="p-10 w-full max-w-md border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rounded-none text-center">
+                    <h1 className="text-2xl font-black uppercase tracking-tighter mb-4">GAGAL</h1>
+                    <div className="h-2 w-20 bg-black mx-auto"></div>
+                    <p className="mt-6 text-sm font-medium text-red-600">{error}</p>
                 </Card>
             </div>
         )
