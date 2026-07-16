@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -15,7 +15,7 @@ export default function UpdatePasswordPage() {
     const [sessionReady, setSessionReady] = useState(false)
     const router = useRouter()
     const { toast } = useToast()
-    const supabase = createClient()
+    const supabase = useMemo(() => createClient(), [])
 
     useEffect(() => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
