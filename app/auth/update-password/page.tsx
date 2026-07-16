@@ -54,7 +54,12 @@ export default function UpdatePasswordPage() {
 
             if (code && !cancelled) {
                 const { error: codeError } = await supabase.auth.exchangeCodeForSession(code)
-                if (!codeError && !cancelled) {
+                if (codeError) {
+                    console.error('PKCE code exchange error:', codeError)
+                    setError('Link tidak valid (' + (codeError.message || 'unknown') + '). Silakan minta link reset password baru.')
+                    return
+                }
+                if (!cancelled) {
                     cancelled = true
                     setSessionReady(true)
                     history.replaceState(null, '', window.location.pathname)
