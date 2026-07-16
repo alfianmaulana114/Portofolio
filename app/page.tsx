@@ -38,8 +38,9 @@ export default async function Home() {
   const organisasiExp = experiences?.filter(e => e.category === 'Organisasi') || []
 
   return (
-    <main className="min-h-screen bg-white relative selection:bg-black selection:text-white">
+    <>
       <ParticlesBackground />
+      <main className="min-h-screen bg-white relative selection:bg-black selection:text-white">
       <Navbar />
 
       <div className="pt-0 relative">
@@ -64,6 +65,7 @@ export default async function Home() {
       </div>
       <Footer />
 
-    </main>
+      </main>
+    </>
   );
 }
