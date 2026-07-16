@@ -16,6 +16,7 @@ function getSupabaseHostname(): string {
 }
 
 const nextConfig: NextConfig = {
+  distDir: '.next-fresh',
   images: {
     remotePatterns: [
       {

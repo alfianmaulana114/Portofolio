@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -67,9 +68,18 @@ export default function LoginPage() {
                         />
                     </div>
 
+                    <div className="flex justify-end">
+                        <Link
+                            href="/forgot-password"
+                            className="text-xs font-bold uppercase tracking-wider text-gray-500 hover:text-black transition-colors"
+                        >
+                            Lupa Password?
+                        </Link>
+                    </div>
+
                     <Button
                         type="submit"
-                        className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black rounded-none h-16 font-black text-xl uppercase tracking-widest transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] disabled:opacity-50 mt-4"
+                        className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black rounded-none h-16 font-black text-xl uppercase tracking-widest transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] disabled:opacity-50"
                         disabled={loading}
                     >
                         {loading ? 'DITUNGGU...' : 'MASUK'}
