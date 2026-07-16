@@ -2,7 +2,6 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
-import sharp from 'sharp'
 import { z } from 'zod'
 
 // --- Security Schemas ---
@@ -59,6 +58,7 @@ async function uploadImage(file: File, bucket: string) {
     const supabase = await createClient()
 
     try {
+        const sharp = (await import('sharp')).default
         const buffer = Buffer.from(await file.arrayBuffer())
 
         // Security: Validate that buffer is actually an image by checking magic bytes
