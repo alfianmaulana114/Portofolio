@@ -9,7 +9,7 @@ import Projects from "@/components/landing/Projects";
 import GithubActivity from "@/components/landing/GithubActivity";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/shared/Footer";
-import ParticlesBackground from '@/components/landing/ParticlesBackground';
+import ParticlesBackground from '@/components/landing/ParticlesBackgroundWrapper';
 import ScrollProgress from '@/components/shared/ScrollProgress';
 
 export const revalidate = 0; // Ensure dynamic data fetching
@@ -43,25 +43,18 @@ export default async function Home() {
       <Navbar />
 
       <div className="pt-0 relative">
-        {/* Horizontal decorative lines for tech feel */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[20%] left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[40%] left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[60%] left-0 w-full h-[1px] bg-black/5"></div>
-        <div className="absolute top-[80%] left-0 w-full h-[1px] bg-black/5"></div>
-
         <Hero />
         <About />
         <TechStack />
 
         {/* Render professional experiences */}
         {profesionalExp.length > 0 && (
-          <Experience data={profesionalExp} title="WORK EXPERIENCE" />
+          <Experience data={profesionalExp} title="PENGALAMAN KERJA" />
         )}
 
         {/* Render organization experiences */}
         {organisasiExp.length > 0 && (
-          <Experience data={organisasiExp} title="ORGANIZATION EXPERIENCE" />
+          <Experience data={organisasiExp} title="PENGALAMAN ORGANISASI" />
         )}
 
         <Projects data={projects} />

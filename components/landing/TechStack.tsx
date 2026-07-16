@@ -33,34 +33,34 @@ const techStack = [
 
 export default function TechStack() {
     return (
-        <section id="techstack" className="py-8 bg-transparent relative overflow-hidden">
+        <section id="techstack" className="py-6 bg-transparent relative overflow-hidden">
             <div className="container mx-auto px-4 md:px-8 max-w-[1200px] relative z-10">
-                <div className="flex flex-col items-center mb-12 text-center">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Activity size={16} className="text-yellow-500 animate-pulse" />
-                        <span className="text-[10px] md:text-[12px] font-black tracking-[0.5em]">SYSTEM_MODULES_01</span>
+                <div className="flex flex-col items-center text-center mb-8">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Activity size={12} className="text-yellow-500 animate-pulse" />
+                        <span className="text-[9px] font-black tracking-[0.3em] text-gray-400">// dependencies</span>
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tighter uppercase italic">Tech Stack</h2>
-                    <div className="h-1.5 w-16 bg-black"></div>
+                    <h2 className="text-2xl md:text-4xl font-black tracking-tighter uppercase text-black">Tech Stack</h2>
+                    <div className="mt-2 h-px w-12 bg-black/20"></div>
                 </div>
 
-                <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-4">
+                <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8 gap-2 md:gap-3">
                     {techStack.map((tech) => (
                         <div key={tech.name} className="group relative">
-                            <div className="relative bg-white border border-black p-2 md:p-4 flex flex-col items-center justify-center gap-1 md:gap-3 transition-all duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:shadow-none overflow-hidden">
+                            <div className="relative bg-white border border-black p-1.5 md:p-3 flex flex-col items-center justify-center gap-1 md:gap-2 transition-all duration-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
 
                                 <div className={`transition-all duration-500 transform group-hover:scale-110 ${tech.color}`}>
-                                    <tech.icon className="h-6 w-6 md:h-10 md:w-10 stroke-[1.5px]" />
+                                    <tech.icon className="h-4 w-4 md:h-7 md:w-7 stroke-[1.5px]" />
                                 </div>
 
                                 <div className="flex flex-col items-center text-center">
-                                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-tighter truncate w-full">
+                                    <span className="text-[5px] md:text-[7px] font-black uppercase tracking-tighter truncate w-full">
                                         {tech.name}
                                     </span>
                                 </div>
 
-                                <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block">
-                                    <Zap size={8} className="text-yellow-400 fill-yellow-400" />
+                                <div className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block">
+                                    <Zap size={6} className="text-yellow-400 fill-yellow-400" />
                                 </div>
                             </div>
                         </div>

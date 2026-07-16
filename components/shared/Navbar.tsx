@@ -12,10 +12,10 @@ import {
 } from '@/components/ui/sheet'
 
 const navItems = [
-  { name: 'About', href: '#about' },
-  { name: 'Experience', href: '#work-experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Tentang', href: '#about' },
+  { name: 'Pengalaman', href: '#work-experience' },
+  { name: 'Proyek', href: '#projects' },
+  { name: 'Kontak', href: '#contact' },
 ]
 
 export default function Navbar() {

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Linkedin, Terminal, Database } from 'lucide-react'
+import { Linkedin, Terminal, Database } from 'lucide-react'
 
 export default function Hero() {
     return (
@@ -20,13 +20,10 @@ export default function Hero() {
                 ></div>
 
                 {/* Floating IT Elements */}
-                <div className="absolute top-[15%] left-[5%] animate-bounce duration-[3000ms] opacity-20 hidden md:block text-black">
-                    <div className="px-3 py-1 border-2 border-black font-black text-[10px] tracking-widest uppercase italic font-mono">{"SELECT * FROM api"}</div>
-                </div>
-                <div className="absolute top-[25%] right-[10%] animate-pulse opacity-20 hidden md:block text-black">
+                <div className="absolute top-24 md:top-28 right-4 md:right-6 lg:right-8 animate-pulse opacity-20 hidden md:block text-black">
                     <Database className="h-10 w-10" />
                 </div>
-                <div className="absolute bottom-[20%] left-[10%] animate-bounce duration-[4000ms] opacity-20 hidden md:block text-black">
+                <div className="absolute bottom-20 md:bottom-24 left-4 md:left-6 lg:left-8 animate-bounce duration-[4000ms] opacity-20 hidden md:block text-black">
                     <Terminal className="h-8 w-8" />
                 </div>
             </div>
@@ -39,11 +36,11 @@ export default function Hero() {
                     </div>
 
                     <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-black leading-[1.1] uppercase">
-                        HELLO, I AM <br className="md:hidden" /> <span className=" decoration-4 ">ALFIAN.</span>
+                        HALO, SAYA <br className="md:hidden" /> <span className=" decoration-4 ">ALFIAN.</span>
                     </h1>
 
                     <p className="text-sm md:text-xl text-gray-800 max-w-lg leading-relaxed font-bold border-black md:border-l-4 border-l-0 md:pl-4 px-2 md:px-4">
-                        An IT Enthusiast continuously exploring and creating innovative technological solutions. Focused on Software Development, Cloud Computing, and Project Management.
+                        Seorang IT Enthusiast yang terus mengeksplorasi dan menciptakan solusi teknologi inovatif. Fokus pada Software Development, Cloud Computing, dan Project Management.
                     </p>
 
                     <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2 md:pt-4 w-full">
@@ -76,8 +73,7 @@ export default function Hero() {
                                 src="/images/home1.png"
                                 alt="Alfian"
                                 fill
-                                quality={100}
-                                unoptimized
+                                sizes="(max-width: 768px) 260px, 440px"
                                 className="object-contain filter grayscale hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
                                 priority
                             />
@@ -95,11 +91,7 @@ export default function Hero() {
 
             </div>
 
-            <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-                <Link href="#about" className="text-gray-400 hover:text-black transition-colors">
-                    <ArrowRight className="h-6 w-6 rotate-90" />
-                </Link>
-            </div>
+            
         </section>
     )
 }

@@ -13,7 +13,7 @@ export default function Footer() {
                         IT Enthusiast
                     </p>
                     <p className="text-sm text-gray-500 font-medium">
-                        Copyright © 2026 Alfian Maulana. All rights reserved.
+                        Hak Cipta © 2026 Alfian Maulana.
                     </p>
                 </div>
 
