@@ -29,6 +29,7 @@ export default function ForgotPasswordPage() {
             setSent(true)
             toast({ title: 'Success', description: 'Link reset password telah dikirim ke email Anda.' })
         } catch (error: any) {
+            console.error('Forgot password error:', error)
             toast({ title: 'Error', description: error.message || 'Gagal mengirim email reset password.', variant: 'destructive' })
         } finally {
             setLoading(false)

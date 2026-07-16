@@ -3,24 +3,44 @@
 import * as React from "react"
 
 type ToastProps = {
+  id: string
   title?: string
   description?: string
   variant?: "default" | "destructive"
 }
 
-export function useToast() {
-  const toast = React.useCallback(({ title, description, variant }: ToastProps) => {
-    // Simple console-based toast implementation
-    // In production, you might want to use a toast library like sonner or react-hot-toast
-    const message = variant === 'destructive' 
-      ? `Error: ${title || 'An error occurred'}${description ? ` - ${description}` : ''}`
-      : `Success: ${title || 'Operation successful'}${description ? ` - ${description}` : ''}`
-    
-    console.log(message)
-    
-    // Optional: You can implement a visual toast notification here
-    // For now, we'll just log to console to avoid blocking the UI
+type ToastInput = Omit<ToastProps, "id">
+
+type ToastContextType = {
+  toasts: ToastProps[]
+  toast: (input: ToastInput) => void
+  dismiss: (id: string) => void
+}
+
+export const ToastContext = React.createContext<ToastContextType | null>(null)
+
+export function ToastProvider({ children }: { children: React.ReactNode }) {
+  const [toasts, setToasts] = React.useState<ToastProps[]>([])
+
+  const dismiss = React.useCallback((id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id))
   }, [])
 
-  return { toast }
+  const toast = React.useCallback((input: ToastInput) => {
+    const id = Math.random().toString(36).slice(2)
+    setToasts((prev) => [...prev, { ...input, id }])
+    setTimeout(() => dismiss(id), 4000)
+  }, [dismiss])
+
+  return React.createElement(
+    ToastContext.Provider,
+    { value: { toasts, toast, dismiss } },
+    children
+  )
+}
+
+export function useToast() {
+  const ctx = React.useContext(ToastContext)
+  if (!ctx) throw new Error("useToast must be used within a ToastProvider")
+  return { toast: ctx.toast }
 }

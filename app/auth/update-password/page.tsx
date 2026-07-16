@@ -22,32 +22,7 @@ export default function UpdatePasswordPage() {
         let subscription: any
         let timeout: NodeJS.Timeout
 
-        async function initSession() {
-            // 1. Periksa parameter query (untuk alur PKCE)
-            const searchParams = new URLSearchParams(window.location.search)
-            const queryError = searchParams.get('error') || searchParams.get('error_description')
-            if (queryError) {
-                setError(`Link tidak valid: ${queryError}. Silakan minta link reset password baru.`)
-                return
-            }
-
-            const code = searchParams.get('code')
-            if (code) {
-                const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-                if (!error && data.session && !cancelled) {
-                    cancelled = true
-                    setSessionReady(true)
-                    // Bersihkan parameter query dari URL
-                    const newUrl = window.location.pathname + window.location.hash
-                    window.history.replaceState({}, '', newUrl)
-                    return
-                } else if (error) {
-                    setError(`Gagal memverifikasi token: ${error.message}. Silakan minta link reset password baru.`)
-                    return
-                }
-            }
-
-            // 2. Periksa hash URL (untuk alur implicit/hash legacy)
+        async function init() {
             const hash = window.location.hash
 
             if (hash && hash.includes('error=')) {
@@ -57,25 +32,24 @@ export default function UpdatePasswordPage() {
                 return
             }
 
-            if (hash && hash.includes('type=recovery')) {
+            if (hash && hash.includes('access_token')) {
                 const params = new URLSearchParams(hash.replace('#', ''))
                 const accessToken = params.get('access_token')
                 const refreshToken = params.get('refresh_token')
                 if (accessToken) {
-                    const { data, error } = await supabase.auth.setSession({
+                    const { data, error: sessionError } = await supabase.auth.setSession({
                         access_token: accessToken,
                         refresh_token: refreshToken || '',
                     })
-                    if (!error && data.session && !cancelled) {
+                    if (!sessionError && data.session && !cancelled) {
                         cancelled = true
                         setSessionReady(true)
-                        window.location.hash = ''
+                        history.replaceState(null, '', window.location.pathname)
                         return
                     }
                 }
             }
 
-            // 3. Periksa apakah sudah ada sesi aktif
             const { data: { session } } = await supabase.auth.getSession()
             if (session && !cancelled) {
                 cancelled = true
@@ -95,10 +69,10 @@ export default function UpdatePasswordPage() {
                 if (!cancelled) {
                     setError('Token tidak valid atau sudah kedaluwarsa. Silakan minta link reset password baru.')
                 }
-            }, 5000)
+            }, 8000)
         }
 
-        initSession()
+        init()
 
         return () => {
             cancelled = true
@@ -123,13 +97,14 @@ export default function UpdatePasswordPage() {
         setLoading(true)
 
         try {
-            const { error } = await supabase.auth.updateUser({ password })
-            if (error) throw error
+            const { error: updateError } = await supabase.auth.updateUser({ password })
+            if (updateError) throw updateError
 
             toast({ title: 'Success', description: 'Password berhasil diubah!' })
             router.push('/loginalfian')
-        } catch (error: any) {
-            toast({ title: 'Error', description: error.message || 'Gagal mengubah password.', variant: 'destructive' })
+        } catch (err: any) {
+            console.error('Update password error:', err)
+            toast({ title: 'Error', description: err.message || 'Gagal mengubah password.', variant: 'destructive' })
         } finally {
             setLoading(false)
         }
