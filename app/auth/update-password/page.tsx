@@ -19,36 +19,91 @@ export default function UpdatePasswordPage() {
 
     useEffect(() => {
         let cancelled = false
+        let subscription: any
+        let timeout: NodeJS.Timeout
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-            if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
-                cancelled = true
-                setSessionReady(true)
+        async function initSession() {
+            // 1. Periksa parameter query (untuk alur PKCE)
+            const searchParams = new URLSearchParams(window.location.search)
+            const queryError = searchParams.get('error') || searchParams.get('error_description')
+            if (queryError) {
+                setError(`Link tidak valid: ${queryError}. Silakan minta link reset password baru.`)
+                return
             }
-        })
 
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session && !cancelled) {
-                cancelled = true
-                setSessionReady(true)
+            const code = searchParams.get('code')
+            if (code) {
+                const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+                if (!error && data.session && !cancelled) {
+                    cancelled = true
+                    setSessionReady(true)
+                    // Bersihkan parameter query dari URL
+                    const newUrl = window.location.pathname + window.location.hash
+                    window.history.replaceState({}, '', newUrl)
+                    return
+                } else if (error) {
+                    setError(`Gagal memverifikasi token: ${error.message}. Silakan minta link reset password baru.`)
+                    return
+                }
             }
-        })
 
-        const timer = setTimeout(async () => {
-            if (cancelled) return
+            // 2. Periksa hash URL (untuk alur implicit/hash legacy)
+            const hash = window.location.hash
+
+            if (hash && hash.includes('error=')) {
+                const params = new URLSearchParams(hash.replace('#', ''))
+                const errCode = params.get('error_code') || params.get('error')
+                setError(`Link tidak valid (${errCode}). Silakan minta link reset password baru.`)
+                return
+            }
+
+            if (hash && hash.includes('type=recovery')) {
+                const params = new URLSearchParams(hash.replace('#', ''))
+                const accessToken = params.get('access_token')
+                const refreshToken = params.get('refresh_token')
+                if (accessToken) {
+                    const { data, error } = await supabase.auth.setSession({
+                        access_token: accessToken,
+                        refresh_token: refreshToken || '',
+                    })
+                    if (!error && data.session && !cancelled) {
+                        cancelled = true
+                        setSessionReady(true)
+                        window.location.hash = ''
+                        return
+                    }
+                }
+            }
+
+            // 3. Periksa apakah sudah ada sesi aktif
             const { data: { session } } = await supabase.auth.getSession()
-            if (session) {
+            if (session && !cancelled) {
                 cancelled = true
                 setSessionReady(true)
                 return
             }
-            setError('Token tidak valid atau sudah kedaluwarsa. Silakan minta link reset password baru.')
-        }, 5000)
+
+            const sub = supabase.auth.onAuthStateChange((event) => {
+                if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+                    cancelled = true
+                    setSessionReady(true)
+                }
+            })
+            subscription = sub.data.subscription
+
+            timeout = setTimeout(() => {
+                if (!cancelled) {
+                    setError('Token tidak valid atau sudah kedaluwarsa. Silakan minta link reset password baru.')
+                }
+            }, 5000)
+        }
+
+        initSession()
 
         return () => {
-            subscription?.unsubscribe()
-            clearTimeout(timer)
             cancelled = true
+            subscription?.unsubscribe()
+            clearTimeout(timeout)
         }
     }, [])
 
