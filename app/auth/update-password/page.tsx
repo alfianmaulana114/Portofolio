@@ -23,19 +23,21 @@ export default function UpdatePasswordPage() {
         let timeout: NodeJS.Timeout
 
         async function init() {
+            const params = new URLSearchParams(window.location.search)
+            const code = params.get('code')
             const hash = window.location.hash
 
             if (hash && hash.includes('error=')) {
-                const params = new URLSearchParams(hash.replace('#', ''))
-                const errCode = params.get('error_code') || params.get('error')
+                const hashParams = new URLSearchParams(hash.replace('#', ''))
+                const errCode = hashParams.get('error_code') || hashParams.get('error')
                 setError(`Link tidak valid (${errCode}). Silakan minta link reset password baru.`)
                 return
             }
 
             if (hash && hash.includes('access_token')) {
-                const params = new URLSearchParams(hash.replace('#', ''))
-                const accessToken = params.get('access_token')
-                const refreshToken = params.get('refresh_token')
+                const hashParams = new URLSearchParams(hash.replace('#', ''))
+                const accessToken = hashParams.get('access_token')
+                const refreshToken = hashParams.get('refresh_token')
                 if (accessToken) {
                     const { data, error: sessionError } = await supabase.auth.setSession({
                         access_token: accessToken,
@@ -47,6 +49,16 @@ export default function UpdatePasswordPage() {
                         history.replaceState(null, '', window.location.pathname)
                         return
                     }
+                }
+            }
+
+            if (code && !cancelled) {
+                const { error: codeError } = await supabase.auth.exchangeCodeForSession(code)
+                if (!codeError && !cancelled) {
+                    cancelled = true
+                    setSessionReady(true)
+                    history.replaceState(null, '', window.location.pathname)
+                    return
                 }
             }
 

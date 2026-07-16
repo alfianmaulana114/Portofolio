@@ -30,24 +30,27 @@ export async function GET(request: Request) {
     if (code) {
         const supabase = await createClient()
         const { error } = await supabase.auth.exchangeCodeForSession(code)
-        if (!error) {
-            const forwardedHost = request.headers.get('x-forwarded-host')
-            const isLocalEnv = process.env.NODE_ENV === 'development'
-            
-            if (isLocalEnv) {
-                return NextResponse.redirect(`${origin}${next}`)
-            } else if (forwardedHost) {
-                // Security: Validate forwarded host to prevent host header injection
-                const allowedHosts = process.env.ALLOWED_HOSTS?.split(',') || []
-                const isValidHost = allowedHosts.length === 0 || allowedHosts.includes(forwardedHost)
-                if (isValidHost) {
-                    return NextResponse.redirect(`https://${forwardedHost}${next}`)
-                }
-            }
-            return NextResponse.redirect(`${origin}${next}`)
+        if (error) {
+            console.error('Auth callback code exchange error:', error)
+            return NextResponse.redirect(`${origin}/auth/update-password#error=${error.message || 'unknown'}`)
         }
+
+        const forwardedHost = request.headers.get('x-forwarded-host')
+        const isLocalEnv = process.env.NODE_ENV === 'development'
+
+        if (isLocalEnv) {
+            return NextResponse.redirect(`${origin}${next}`)
+        } else if (forwardedHost) {
+            // Security: Validate forwarded host to prevent host header injection
+            const allowedHosts = process.env.ALLOWED_HOSTS?.split(',') || []
+            const isValidHost = allowedHosts.length === 0 || allowedHosts.includes(forwardedHost)
+            if (isValidHost) {
+                return NextResponse.redirect(`https://${forwardedHost}${next}`)
+            }
+        }
+        return NextResponse.redirect(`${origin}${next}`)
     }
 
     // return the user to an error page with instructions
-    return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+    return NextResponse.redirect(`${origin}/auth/update-password#error=Link tidak valid. Silakan coba lagi.`)
 }
