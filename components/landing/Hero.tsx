@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Linkedin, Terminal, Database } from 'lucide-react'
+import { Linkedin, Terminal, Database, FileDown } from 'lucide-react'
 
 export default function Hero() {
     return (
@@ -47,6 +47,11 @@ export default function Hero() {
                         <Button asChild className="h-12 md:h-14 px-6 md:px-8 text-base md:text-lg bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] w-full sm:w-auto">
                             <Link href="https://www.linkedin.com/in/alfianekamaulana" target="_blank">
                                 <Linkedin className="mr-2 h-4 w-4 md:h-5 md:w-5" /> LinkedIn
+                            </Link>
+                        </Button>
+                        <Button asChild className="h-12 md:h-14 px-6 md:px-8 text-base md:text-lg bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] w-full sm:w-auto">
+                            <Link href="/files/cv-alfian.pdf" target="_blank" download>
+                                <FileDown className="mr-2 h-4 w-4 md:h-5 md:w-5" /> UNDUH PROFIL
                             </Link>
                         </Button>
                     </div>
